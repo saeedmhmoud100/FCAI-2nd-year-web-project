@@ -3,7 +3,7 @@ header {
   background-image: url("../images/header2.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  min-height: 400px;
+  height: 480px;
   color: white;
   display: flex;
   align-items: center;
@@ -17,6 +17,7 @@ header {
   padding: 15px;
 }
 #done-by > h2 {
+  text-decoration: underline;
   margin: 0 0 6px 0;
 }
 #done-by > .done-items {

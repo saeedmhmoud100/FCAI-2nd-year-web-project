@@ -5,6 +5,7 @@
 }
 
 nav {
+  position: fixed;
   width: 100%;
   height: 80px;
   background-color: #212529;
@@ -13,9 +14,52 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
+  overflow: hidden;
+  transition: min-height 0.2s linear;
 }
-nav > #logo {
+@media screen and (max-width: 690px) {
+  nav {
+    padding: 26px 40px;
+    padding-bottom: 0;
+  }
+}
+@media screen and (max-width: 690px) {
+  nav {
+    flex-direction: column;
+    gap: 20px;
+    min-height: 80px;
+  }
+  nav.extend {
+    min-height: 318px;
+  }
+}
+nav > .first {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+}
+nav > .first #logo {
   font-size: 1.5rem;
+}
+nav > .first > img {
+  width: 26px;
+  box-sizing: content-box;
+  display: block;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 5px 18px;
+  color: rgba(255, 255, 255, 0.55);
+}
+@media screen and (min-width: 690px) {
+  nav > .first > img {
+    display: none;
+  }
+}
+@media screen and (max-width: 690px) {
+  nav > .first {
+    width: 100%;
+  }
 }
 nav > ul {
   display: flex;
@@ -32,6 +76,15 @@ nav > ul > li > a {
 }
 nav > ul > li > a:hover {
   color: #a5a5e0;
+}
+@media screen and (max-width: 690px) {
+  nav > ul {
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    padding: 10px 0;
+    align-items: center;
+  }
 }
 
 /*# sourceMappingURL=utilities.css.map */
