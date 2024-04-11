@@ -3,13 +3,17 @@
         <meta charset="utf-8">
         <title>Login Page</title>
         <meta name="Description" content="This is the login page for my website">
+        <link rel="stylesheet" href="assets/css/utilities.css">
+        <link rel="stylesheet" href="assets/css/sign_up.css">
+
     </head>
     <body>
-    <nav>
-
-        <div align="right">Logo</div>
+    <nav id="nav">
+        <div class="first">
+            <div id="logo">Logo</div>
+            <img src="assets/icons/menu.svg" id="toggle-icon" onclick="_=>navToggle()"/>
+        </div>
         <ul>
-
             <li><a href="user_sign_up.html">sign up</a></li>
             <li><a href="login.html">login</a></li>
 
@@ -21,22 +25,41 @@
 
 
     </nav>
-        <h1 align="center">welcome user</h1>
-        <form action="home.html" align="center">
+
+    <header>
+        <h1> Sign UP</h1>
+    </header>
+
+
+    <div id="form">
+        <div>
             <label for="user">Username</label>
-            <input type="text" name=" Username" id="user"  placeholder="Enter your username"><br><br>
-            <label for="pass">Password:</label>
-            <input type="password" name=" Password" id="pass"   placeholder="Enter your password"><br><br>
-            <label for="confirm">Confirm Password</label>
-            <input type="password" name="Confirm Password" id="confirm" placeholder="Re-enter your password" ><br><br>
+            <input type="text" name=" Username" id="user"  placeholder="Enter your username">
+        </div>
+        <div>
             <label for="email">Email</label>
-            <input type="email" name="Email" id="email" placeholder="example@gmail.com" ><br><br>
+            <input type="email" name="Email" id="email" placeholder="example@gmail.com" >
+
+        </div>
+        <div>
+            <label for="pass">Password:</label>
+            <input type="password" name=" Password" id="pass"   placeholder="Enter your password">
+
+        </div>
+        <div>
+            <label for="confirm">Confirm Password</label>
+            <input type="password" name="Confirm Password" id="confirm" placeholder="Re-enter your password" >
+
+        </div>
+        <div>
             <input type="radio" name="select" id="radio1" placeholder="example@gmail.com" checked> <label for='radio1'>user</label>
             <input type="radio" name="select" id="radio2" placeholder="example@gmail.com" > <label for="radio2">admin</label>
-            <br><br>
+        </div>
 
-            <input type="submit" name="Submit">
-        </form>
+        <input type="button" name="Submit" value="Submit" id="signup-button">
+    </div>
 
+
+    <script src="assets/js/script.js"></script>
     </body>
 </html>

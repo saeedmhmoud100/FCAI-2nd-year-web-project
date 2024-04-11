@@ -1,7 +1,13 @@
 function navToggle() {
-  document.getElementById('nav').classList.toggle('extend');
+    document.getElementById('nav').classList.toggle('extend');
 }
 
-window.onload = function() {
-  document.getElementById('toggle-icon').onclick = navToggle;
+function singUpRedirect() {
+    window.location.href = 'home.html';
+}
+
+
+window.onload = function () {
+    document.getElementById('toggle-icon').onclick = navToggle;
+    document.getElementById('signup-button').onclick = singUpRedirect;
 }
