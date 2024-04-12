@@ -6,6 +6,8 @@
 
 body {
   padding-top: 80px;
+  background-color: #ccc;
+  min-height: 100dvh;
 }
 
 nav {
@@ -113,6 +115,45 @@ header > img {
   top: 0;
   left: 0;
   z-index: -1;
+}
+
+.form {
+  width: 100%;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #ccc;
+}
+.form > .input-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.form > .input-container > input {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-top: 5px;
+  outline: none;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-top: 5px;
+  outline: none;
+  background-color: #212529;
+  color: white;
+  cursor: pointer;
+}
+.submit-button:active {
+  transform: scale(97%, 97%);
 }
 
 /*# sourceMappingURL=utilities.css.map */
