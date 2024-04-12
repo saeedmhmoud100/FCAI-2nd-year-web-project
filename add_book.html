@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="assets/css/utilities.css">
 </head>
 <body>
-<nav>
-
-    <div align="right">Logo</div>
+<nav id="nav">
+    <div class="first">
+        <div id="logo"><a href="home.html">Logo</a></div>
+        <img src="assets/icons/menu.svg" id="toggle-icon" onclick="_=>navToggle()"/>
+    </div>
     <ul>
-
         <li><a href="user_sign_up.html">sign up</a></li>
         <li><a href="login.html">login</a></li>
 
@@ -22,20 +24,36 @@
 
 
 </nav>
-    <h1 align="center">add new book</h1>
-        <form action=""  align="center">
-            <label for="user">ID:</label>
-            <input type="text" name=" Username" id="user" placeholder="Enter your username"><br><br>
-            <label for="user">book name:</label>
-            <input type="text" name=" Username" id="user" placeholder="Enter your username"><br><br>
-            <label for="user">author:</label>
-            <input type="text" name=" Username" id="user" placeholder="Enter your username"><br><br>
-            <label for="user">category:</label>
-            <input type="text" name=" Username" id="user" placeholder="Enter your username"><br><br>
-            <label for="user">description:</label>
-            <input type="text" name=" Username" id="user" placeholder="Enter your username"><br><br>
-            <input type="submit" value="add new book"><br><br>
-            
-            </form>
+
+<header>
+    <img src="assets/images/header.jpg" alt="header image">
+    <h1> Add New Book</h1>
+</header>
+<div class="form">
+    <div class="input-container">
+        <label for="ID">ID:</label>
+        <input type="text" name=" Username" id="ID" placeholder="Enter your username">
+    </div>
+    <div class="input-container">
+        <label for="userName">book name:</label>
+        <input type="text" name=" Username" id="userName" placeholder="Enter your username">
+    </div>
+    <div class="input-container">
+        <label for="author">author:</label>
+        <input type="text" name=" Username" id="author" placeholder="Enter your username">
+    </div>
+    <div class="input-container">
+        <label for="category">category:</label>
+        <input type="text" name=" Username" id="category" placeholder="Enter your username">
+    </div>
+    <div class="input-container">
+        <label for="description">description:</label>
+        <input type="text" name=" Username" id="description" placeholder="Enter your username">
+    </div>
+    <input type="submit" value="Add" class="submit-button">
+
+</div>
+
+<script src="assets/js/script.js"></script>
 </body>
 </html>
