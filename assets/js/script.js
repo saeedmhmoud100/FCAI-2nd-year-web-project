@@ -9,5 +9,5 @@ function singUpRedirect() {
 
 window.onload = function () {
     document.getElementById('toggle-icon').onclick = navToggle;
-    document.getElementById('signup-button').onclick = singUpRedirect;
+    // document.getElementById('signup-button').onclick = singUpRedirect;
 }
