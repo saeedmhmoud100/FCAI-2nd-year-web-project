@@ -2,8 +2,8 @@ function navToggle() {
     document.getElementById('nav').classList.toggle('extend');
 }
 
-function singUpRedirect() {
-    window.location.href = 'home.html';
+function singUpRedirect(direction='home.html') {
+    window.location.href = direction;
 }
 
 

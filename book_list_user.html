@@ -1,98 +1,203 @@
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Login Page</title>
-        <meta name="Description" content="This is the login page for my website">
-    </head>
-    <body>
-    <nav>
+<head>
+    <meta charset="utf-8">
+    <title>Login Page</title>
+    <meta name="Description" content="This is the login page for my website">
+    <link rel="stylesheet" href="assets/css/utilities.css">
+</head>
+<body>
+<nav id="nav">
+    <div class="first">
+        <div id="logo"><a href="home.html">Logo</a></div>
+        <img src="assets/icons/menu.svg" id="toggle-icon" onclick="_=>navToggle()"/>
+    </div>
+    <ul>
+        <li><a href="user_sign_up.html">sign up</a></li>
+        <li><a href="login.html">login</a></li>
 
-        <div align="right">Logo</div>
-        <ul>
-
-            <li><a href="user_sign_up.html">sign up</a></li>
-            <li><a href="login.html">login</a></li>
-
-            <li><a href="home.html">home</a></li>
-            <li><a href="book_list_user.html">book list</a></li>
-            <li><a href="book_list.html">book list (admin)</a></li>
-            <li><a href="borrowed_books_list.html">borrowed books</a></li>
-        </ul>
+        <li><a href="home.html">home</a></li>
+        <li><a href="book_list_user.html">book list</a></li>
+        <li><a href="book_list.html">book list (admin)</a></li>
+        <li><a href="borrowed_books_list.html">borrowed books</a></li>
+    </ul>
 
 
-    </nav>
-        <h1 align="center">Books List</h1>
-        <br><hr>
-        <label for="search"> search</label>
-        <input type="search" id="search" >
-        <div>
-            <span>book name: Random Data: Analysis and Measurement Procedures</span><br/>
-            <span>author: Julius S. Bendat & Allan G. Piersol</span><br/>
-            <span>category: statistics</span><br/>
+</nav>
 
-            <span>available</span> de
-            <a href="borrow_book.html"><button>borrow</button></a>
-            <a href="details.html"><button>details</button></a>
+<header>
+    <img src="assets/images/header.jpg" alt="header image">
+    <h1> Books List</h1>
+</header>
 
+<div class="container">
+    <div class="row">
+        <div class="col-12 search-box">
+            <input placeholder="Search..." type="search" id="search">
+            <button class="btn-1    btn-dark"> search</button>
         </div>
-        <br/>
-        <div>
-            <span>book name: Random Data: Analysis and Measurement Procedures</span><br/>
-            <span>author: Julius S. Bendat & Allan G. Piersol</span><br/>
-            <span>category: statistics</span><br/>
+    </div>
 
-            <span>available</span> de
-            <a href="borrow_book.html"><button>borrow</button></a>
-            <a href="details.html"><button>details</button></a>
+    <div class="row">
+        <div class="col-6 col-sm-12 col-lg-3">
+            <div class="card">
+                <img src="assets/images/book1.jpg" alt="book image">
+                <div class="card-body">
+                <h2 class="card-title">Random Data: Analysis and Measurement Procedures</h2>
+                <span>author: Julius S. Bendat & Allan G. Piersol</span>
+                <span>category: statistics</span>
+                <span>available: yes</span>
 
+                <div class="row w-100">
+                    <div class="col-12 text-center">
+                        <button class="btn-6 btn-dark" onclick="singUpRedirect('borrow_book.html')">borrow</button>
+
+                        <button class="btn-6 btn-dark" onclick="singUpRedirect('delete_book.html')">details</button>
+                    </div>
+                </div>
+
+
+                </div>
+
+            </div>
         </div>
-        <br/>
-        <div>
-            <span>book name: Random Data: Analysis and Measurement Procedures</span><br/>
-            <span>author: Julius S. Bendat & Allan G. Piersol</span><br/>
-            <span>category: statistics</span><br/>
+        <div class="col-6 col-sm-12 col-lg-3">
+            <div class="card">
+                <img src="assets/images/book2.jpg" alt="book image">
+                <div class="card-body">
+                <h2 class="card-title">Random Data: Analysis and Measurement Procedures</h2>
+                <span>author: Julius S. Bendat & Allan G. Piersol</span>
+                <span>category: statistics</span>
+                <span>available: yes</span>
 
-            <span>available</span> de
-            <a href="borrow_book.html"><button>borrow</button></a>
-            <a href="details.html"><button>details</button></a>
+                <div class="row w-100">
+                    <div class="col-12 text-center">
+                        <button class="btn-6 btn-dark" onclick="singUpRedirect('borrow_book.html')">borrow</button>
 
+                        <button class="btn-6 btn-dark" onclick="singUpRedirect('delete_book.html')">details</button>
+                    </div>
+                </div>
+
+
+                </div>
+
+            </div>
         </div>
-        <br/>
-        <div>
-            <span>book name: Random Data: Analysis and Measurement Procedures</span><br/>
-            <span>author: Julius S. Bendat & Allan G. Piersol</span><br/>
-            <span>category: statistics</span><br/>
+        <div class="col-6 col-sm-12 col-lg-3">
+            <div class="card">
+                <img src="assets/images/book3.jpg" alt="book image">
+                <div class="card-body">
+                <h2 class="card-title">Random Data: Analysis and Measurement Procedures</h2>
+                <span>author: Julius S. Bendat & Allan G. Piersol</span>
+                <span>category: statistics</span>
+                <span>available: yes</span>
 
-            <span>available</span> de
-            <a href="borrow_book.html"><button>borrow</button></a>
-            <a href="details.html"><button>details</button></a>
+                <div class="row w-100">
+                    <div class="col-12 text-center">
+                        <button class="btn-6 btn-dark" onclick="singUpRedirect('borrow_book.html')">borrow</button>
 
+                        <button class="btn-6 btn-dark" onclick="singUpRedirect('delete_book.html')">details</button>
+                    </div>
+                </div>
+
+
+                </div>
+
+            </div>
         </div>
-        <br/>
-        <div>
-            <span>book name: Random Data: Analysis and Measurement Procedures</span><br/>
-            <span>author: Julius S. Bendat & Allan G. Piersol</span><br/>
-            <span>category: statistics</span><br/>
+        <div class="col-6 col-sm-12 col-lg-3">
+            <div class="card">
+                <img src="assets/images/book4.jpg" alt="book image">
+                <div class="card-body">
+                <h2 class="card-title">Random Data: Analysis and Measurement Procedures</h2>
+                <span>author: Julius S. Bendat & Allan G. Piersol</span>
+                <span>category: statistics</span>
+                <span>available: yes</span>
 
-            <span>available</span> de
-            <a href="borrow_book.html"><button>borrow</button></a>
-            <a href="details.html"><button>details</button></a>
+                <div class="row w-100">
+                    <div class="col-12 text-center">
+                        <button class="btn-6 btn-dark" onclick="singUpRedirect('borrow_book.html')">borrow</button>
 
+                        <button class="btn-6 btn-dark" onclick="singUpRedirect('delete_book.html')">details</button>
+                    </div>
+                </div>
+
+
+                </div>
+
+            </div>
         </div>
-        <br/>
-        <div>
-            <span>book name: Random Data: Analysis and Measurement Procedures</span><br/>
-            <span>author: Julius S. Bendat & Allan G. Piersol</span><br/>
-            <span>category: statistics</span><br/>
+        <div class="col-6 col-sm-12 col-lg-3">
+            <div class="card">
+                <img src="assets/images/book2.jpg" alt="book image">
+                <div class="card-body">
+                <h2 class="card-title">Random Data: Analysis and Measurement Procedures</h2>
+                <span>author: Julius S. Bendat & Allan G. Piersol</span>
+                <span>category: statistics</span>
+                <span>available: yes</span>
 
-            <span>available</span> de
-            <a href="borrow_book.html"><button>borrow</button></a>
-            <a href="details.html"><button>details</button></a>
+                <div class="row w-100">
+                    <div class="col-12 text-center">
+                        <button class="btn-6 btn-dark" onclick="singUpRedirect('borrow_book.html')">borrow</button>
 
+                        <button class="btn-6 btn-dark" onclick="singUpRedirect('delete_book.html')">details</button>
+                    </div>
+                </div>
+
+
+                </div>
+
+            </div>
         </div>
-        <br/>
+        <div class="col-6 col-sm-12 col-lg-3">
+            <div class="card">
+                <img src="assets/images/book3.jpg" alt="book image">
+                <div class="card-body">
+                <h2 class="card-title">Random Data: Analysis and Measurement Procedures</h2>
+                <span>author: Julius S. Bendat & Allan G. Piersol</span>
+                <span>category: statistics</span>
+                <span>available: yes</span>
 
-        
+                <div class="row w-100">
+                    <div class="col-12 text-center">
+                        <button class="btn-6 btn-dark" onclick="singUpRedirect('borrow_book.html')">borrow</button>
 
-    </body>
+                        <button class="btn-6 btn-dark" onclick="singUpRedirect('delete_book.html')">details</button>
+                    </div>
+                </div>
+
+
+                </div>
+
+            </div>
+        </div>
+        <div class="col-6 col-sm-12 col-lg-3">
+            <div class="card">
+                <img src="assets/images/book1.jpg" alt="book image">
+                <div class="card-body">
+                <h2 class="card-title">Random Data: Analysis and Measurement Procedures</h2>
+                <span>author: Julius S. Bendat & Allan G. Piersol</span>
+                <span>category: statistics</span>
+                <span>available: yes</span>
+
+                <div class="row w-100">
+                    <div class="col-12 text-center">
+                        <button class="btn-6 btn-dark" onclick="singUpRedirect('borrow_book.html')">borrow</button>
+
+                        <button class="btn-6 btn-dark" onclick="singUpRedirect('delete_book.html')">details</button>
+                    </div>
+                </div>
+
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>
+<script src="assets/js/script.js"></script>
+</body>
 </html>
