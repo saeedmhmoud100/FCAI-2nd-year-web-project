@@ -21,6 +21,7 @@ nav {
   padding: 0 20px;
   overflow: hidden;
   transition: min-height 0.2s linear;
+  z-index: 2;
 }
 @media screen and (max-width: 690px) {
   nav {
@@ -43,8 +44,11 @@ nav > .first {
   flex-direction: row;
   align-items: center;
 }
-nav > .first #logo {
+nav > .first #logo > a {
   font-size: 1.5rem;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
 }
 nav > .first > img {
   width: 26px;
@@ -93,15 +97,22 @@ nav > ul > li > a:hover {
 
 header {
   width: 100%;
-  background-image: url("../images/header2.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
   height: 400px;
   color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+header > img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
 
 /*# sourceMappingURL=utilities.css.map */
