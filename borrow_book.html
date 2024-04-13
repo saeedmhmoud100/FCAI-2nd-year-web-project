@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="assets/css/utilities.css">
 </head>
 <body>
-<nav>
-
-    <div align="right">Logo</div>
+<nav id="nav">
+    <div class="first">
+        <div id="logo"><a href="home.html">Logo</a></div>
+        <img src="assets/icons/menu.svg" id="toggle-icon" onclick="_=>navToggle()"/>
+    </div>
     <ul>
-
         <li><a href="user_sign_up.html">sign up</a></li>
         <li><a href="login.html">login</a></li>
 
@@ -22,11 +24,19 @@
 
 
 </nav>
-    <h1 align="center">Are you sure you want to borrow this book: book1</h1>
-        <form action=""  align="center">
-            <input type="submit" value="borrow"/>
-            <a href="book_list_user.html"><input type="button" value="cancel"/></a>
-        </form>
-        
+
+<div class="container">
+    <div class="row flex-center">
+        <h1>Are you sure you want to borrow this book: book1</h1>
+    </div>
+    <div class="row flex-center">
+        <div class="col-6 no-wrap gap">
+            <button class="btn-3 btn-dark" onclick="javascript:void(0)">borrow</button>
+            <button class="btn-3 btn-dark" onclick="urlRedirect('book_list_user.html')">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script src="assets/js/script.js"></script>
 </body>
 </html>
