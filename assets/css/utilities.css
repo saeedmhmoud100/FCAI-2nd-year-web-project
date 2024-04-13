@@ -545,4 +545,19 @@ header > img {
   text-align: left;
 }
 
+.no-wrap {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.gap {
+  gap: 20px;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
 /*# sourceMappingURL=utilities.css.map */
