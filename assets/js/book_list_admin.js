@@ -1,4 +1,4 @@
-import {getAllBooks} from "./myLocalStorage.js";
+import {getAllBooks,addCurrentBook} from "./myLocalStorage.js";
 function book_list_admin() {
     const n = document.getElementById('book_list_admin');
 
@@ -10,6 +10,7 @@ function book_list_admin() {
                 <div class="card">
                     <img src="assets/images/book1.jpg" alt="book image">
                     <div class="card-body">
+                         <span class="id" style="display: none;">${book._id}</span>
                         <h2 class="card-title">Random Data: ${book._title}</h2>
                         <span>author:  ${book._author}</span>
                         <span>category:  ${book._category}</span>
@@ -17,7 +18,7 @@ function book_list_admin() {
 
                         <div class="row w-100">
                             <div class="col-12 text-center">
-                                <button class="btn-6 btn-dark" onclick="urlRedirect('update_book.html')">Update</button>
+                                <button class="btn-6 btn-dark" onclick="urlRedirect('update_book.html');addCurrentBook()">Update</button>
 
                                 <button class="btn-6 btn-dark" onclick="urlRedirect('delete_book.html')">Delete</button>
                             </div>

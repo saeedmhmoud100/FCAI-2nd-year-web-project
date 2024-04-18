@@ -25,8 +25,6 @@ function book_list_user() {
 
                 <div class="row w-100">
                     <div class="col-12 text-center">
-                        <button class="btn-6 btn-dark" onclick="urlRedirect('borrow_book.html')">borrow</button>
-
                         <button class="btn-6 btn-dark">details</button>
                     </div>
                 </div>

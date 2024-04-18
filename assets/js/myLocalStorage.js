@@ -13,6 +13,9 @@ function addBook(book) {
 
 }
 
+function setAllBooks(books) {
+    localStorage.setItem('books', JSON.stringify(books));
+}
 
 function getAllBooks() {
     createBooks();
@@ -29,4 +32,4 @@ function addCurrentBook(id) {
     localStorage.setItem('currentBook', id);
 }
 
-export {addBook,getAllBooks,addCurrentBook,getCurrentBook};
+export {addBook,getAllBooks,addCurrentBook,getCurrentBook,setAllBooks};
