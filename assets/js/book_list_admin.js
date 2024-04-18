@@ -1,4 +1,10 @@
 import {getAllBooks,addCurrentBook} from "./myLocalStorage.js";
+
+function handle_delete_button_click(bookId) {
+    addCurrentBook(bookId);
+    urlRedirect('delete_book.html');
+}
+
 function book_list_admin() {
     const n = document.getElementById('book_list_admin');
 
@@ -33,6 +39,7 @@ function book_list_admin() {
         const div = document.createElement('div');
         div.innerHTML = template.trim();
         n.appendChild(div.firstChild);
+        n.lastElementChild.lastElementChild.lastElementChild.lastElementChild.lastElementChild.lastElementChild.addEventListener('click', () => handle_delete_button_click(book._id));
     });
 }
 

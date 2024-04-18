@@ -28,7 +28,6 @@ function getCurrentBook() {
 }
 
 function addCurrentBook(id) {
-    console.log(id)
     localStorage.setItem('currentBook', id);
 }
 
