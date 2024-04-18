@@ -13,4 +13,11 @@ function addBook(book) {
 
 }
 
-export {addBook};
+
+function getAllBooks() {
+    createBooks();
+
+    return JSON.parse(localStorage.getItem('books'));
+}
+
+export {addBook,getAllBooks};
