@@ -20,4 +20,13 @@ function getAllBooks() {
     return JSON.parse(localStorage.getItem('books'));
 }
 
-export {addBook,getAllBooks};
+function getCurrentBook() {
+    return localStorage.getItem('currentBook');
+}
+
+function addCurrentBook(id) {
+    console.log(id)
+    localStorage.setItem('currentBook', id);
+}
+
+export {addBook,getAllBooks,addCurrentBook,getCurrentBook};

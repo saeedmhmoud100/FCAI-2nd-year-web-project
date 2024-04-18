@@ -1,3 +1,5 @@
+import {getAllBooks} from "./myLocalStorage.js";
+
 class Book {
     static id;
     _title;
@@ -17,7 +19,7 @@ class Book {
         this._available = true;
         this._image_path = image_path;
         this._is_borrowed = false;
-        this.id = Book.id++;
+        this._id = Book.id++;
     }
     get title() {
         return this._title;
@@ -67,11 +69,14 @@ class Book {
     set is_borrowed(value) {
         this._is_borrowed = value;
     }
+    get id() {
+        return this._id;
+    }
     toString() {
         return `Title: ${this.title} Author: ${this.author}`;
     }
 }
 
-Book.id = 0;
+Book.id = getAllBooks().length > 0 ? getAllBooks()[getAllBooks().length - 1]._id +1 : 0;
 
 export { Book };
