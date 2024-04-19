@@ -2,7 +2,7 @@ function navToggle() {
     document.getElementById('nav').classList.toggle('extend');
 }
 
-function urlRedirect(direction='home.html') {
+function urlRedirect(direction='index.html') {
     window.location.href = direction;
 }
 
