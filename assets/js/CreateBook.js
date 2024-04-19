@@ -30,9 +30,11 @@ document.getElementById('add-book-button').onclick = addNewBook;
 const handle_change_image = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
+    // async function
     reader.onload = function(e) {
         document.getElementById('bookImage').nextElementSibling.src = e.target.result;
     }
+    // onload function waiting this to complete
     reader.readAsDataURL(file);
 }
 

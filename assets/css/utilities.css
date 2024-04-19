@@ -389,7 +389,7 @@ header > img {
   flex-direction: column;
   width: 100%;
 }
-.form > .input-container > input, .form > .input-container textarea {
+.form > .input-container > input, .form > .input-container textarea, .form > .input-container select {
   width: 100%;
   padding: 10px;
   border: none;

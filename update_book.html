@@ -31,29 +31,47 @@
 </header>
 <div class="form">
     <div class="input-container">
-        <label for="ID">ID:</label>
-        <input type="text" name=" Username" id="ID" value="15" placeholder="Enter your username">
+        <label for="bookImage">book image:</label>
+        <div style="display: flex;align-items: center">
+
+            <input  type="file" id="bookImage" required style="width: 200px">
+            <img src width="80">
+        </div>
     </div>
     <div class="input-container">
-        <label for="userName">book name:</label>
-        <input type="text" name=" Username" id="userName" value="book" placeholder="Enter your username">
+        <label for="bookTitle">book title:</label>
+        <input type="text" id="bookTitle" placeholder="Enter the book title" required>
     </div>
     <div class="input-container">
-        <label for="author">author:</label>
-        <input type="text" name=" Username" id="author" value="author" placeholder="Enter your username">
+        <label for="bookAuthor">author:</label>
+        <input type="text" id="bookAuthor" placeholder="Enter the book author" required>
     </div>
     <div class="input-container">
-        <label for="category">category:</label>
-        <input type="text" name=" Username" id="category" value="category" placeholder="Enter your username">
+        <label for="bookCategory">category:</label>
+        <input type="text" id="bookCategory" placeholder="Enter the book category" required>
     </div>
     <div class="input-container">
-        <label for="description">description:</label>
-        <input type="text" name=" Username" id="description" value="description" placeholder="Enter your username">
+        <label for="bookPrice">price:</label>
+        <input type="text" id="bookPrice" placeholder="Enter the book price" required>
     </div>
-    <input type="submit" value="update book" class="btn-6 btn-dark">
+    <div class="input-container">
+        <label for="bookStatus">status:</label>
+        <select  id="bookStatus">
+            <option value="0">available</option>
+            <option value="1">not available</option>
+        </select>
+    </div>
+
+    <div class="input-container">
+        <label for="bookDescription">description:</label>
+        <textarea id="bookDescription" placeholder="Enter the book description" rows="5" cols="5"></textarea>
+    </div>
+    <input type="submit" value="Update" id="update-book-button" class="btn-6 btn-dark">
+
 
 </div>
 
 <script src="assets/js/script.js"></script>
+<script type="module" src="assets/js/UpdateBook.js"></script>
 </body>
 </html>

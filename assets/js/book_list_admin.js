@@ -4,6 +4,10 @@ function handle_delete_button_click(bookId) {
     addCurrentBook(bookId);
     urlRedirect('delete_book.html');
 }
+function handle_update_button_click(bookId) {
+    addCurrentBook(bookId);
+    urlRedirect('update_book.html');
+}
 
 
 
@@ -25,8 +29,8 @@ function book_list_admin() {
                         <span>available:  ${book._available}</span>
                         <div class="row w-100">
                             <div class="col-12 text-center">
-                                <button class="btn-6 btn-dark" onclick="urlRedirect('update_book.html');addCurrentBook()">Update</button>
-                                <button class="btn-6 btn-dark" onclick="urlRedirect('delete_book.html')">Delete</button>
+                                <button class="btn-6 btn-dark">Update</button>
+                                <button class="btn-6 btn-dark">Delete</button>
                             </div>
                         </div>
                     </div>
@@ -37,6 +41,7 @@ function book_list_admin() {
         div.innerHTML = template.trim();
         n.appendChild(div.firstChild);
         n.lastElementChild.lastElementChild.lastElementChild.lastElementChild.lastElementChild.lastElementChild.addEventListener('click', () => handle_delete_button_click(book._id));
+        n.lastElementChild.lastElementChild.lastElementChild.lastElementChild.lastElementChild.firstElementChild.addEventListener('click', () => handle_update_button_click(book._id));
     });
 }
 
