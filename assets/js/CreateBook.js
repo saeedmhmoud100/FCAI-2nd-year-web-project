@@ -33,7 +33,7 @@ const handle_change_image = (event) => {
     reader.onload = function(e) {
         document.getElementById('bookImage').nextElementSibling.src = e.target.result;
     }
-    // reader.readAsDataURL(file);
+    reader.readAsDataURL(file);
 }
 
 window.onload = function() {
