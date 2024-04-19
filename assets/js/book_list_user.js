@@ -15,7 +15,7 @@ function book_list_user() {
         const template = `
               <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="card">
-                <img src="assets/images/book1.jpg" alt="book image">
+                <img src=${book._image_path} alt="book image">
                 <div class="card-body">
                 <span class="id" style="display: none;">${book.id}</span>
                 <h2 class="card-title">${book._title}</h2>

@@ -10,7 +10,7 @@
 <nav id="nav">
     <div class="first">
         <div id="logo"><a href="home.html">Logo</a></div>
-        <img src="assets/icons/menu.svg" id="toggle-icon" onclick="_=>navToggle()"/>
+        <img src="assets/icons/menu.svg" id="toggle-icon" onclick="navToggle()"/>
     </div>
     <ul>
         <li><a href="user_sign_up.html">sign up</a></li>
@@ -31,30 +31,38 @@
 </header>
 <div class="form">
     <div class="input-container">
+        <label for="bookImage">book image:</label>
+        <div style="display: flex;align-items: center">
+
+            <input  type="file" id="bookImage" required style="width: 200px">
+            <img src width="80">
+        </div>
+    </div>
+    <div class="input-container">
         <label for="bookTitle">book title:</label>
-        <input type="text" name=" Username" id="bookTitle" placeholder="Enter your username">
+        <input type="text" id="bookTitle" placeholder="Enter the book title" required>
     </div>
     <div class="input-container">
         <label for="bookAuthor">author:</label>
-        <input type="text" name=" Username" id="bookAuthor" placeholder="Enter your username">
+        <input type="text" id="bookAuthor" placeholder="Enter the book author" required>
     </div>
     <div class="input-container">
         <label for="bookCategory">category:</label>
-        <input type="text" name=" Username" id="bookCategory" placeholder="Enter your username">
+        <input type="text" id="bookCategory" placeholder="Enter the book category" required>
     </div>
     <div class="input-container">
         <label for="bookPrice">price:</label>
-        <input type="text" name=" Username" id="bookPrice" placeholder="Enter your username">
+        <input type="text" id="bookPrice" placeholder="Enter the book price" required>
     </div>
     <div class="input-container">
         <label for="bookDescription">description:</label>
-        <textarea id="bookDescription" placeholder="Enter your username" rows="5" cols="5"></textarea>
+        <textarea id="bookDescription" placeholder="Enter the book description" rows="5" cols="5"></textarea>
     </div>
     <input type="submit" value="Add" id="add-book-button" class="btn-6 btn-dark">
 
 </div>
 
-<script type="module" src="assets/js/CreateBook.js"></script>
 <script src="assets/js/script.js"></script>
+<script type="module" src="assets/js/CreateBook.js"></script>
 </body>
 </html>

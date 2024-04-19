@@ -5,6 +5,8 @@ function handle_delete_button_click(bookId) {
     urlRedirect('delete_book.html');
 }
 
+
+
 function book_list_admin() {
     const n = document.getElementById('book_list_admin');
 
@@ -14,25 +16,20 @@ function book_list_admin() {
         const template = `
               <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="card">
-                    <img src="assets/images/book1.jpg" alt="book image">
+                    <img src=${book._image_path} alt="book image">
                     <div class="card-body">
                          <span class="id" style="display: none;">${book._id}</span>
                         <h2 class="card-title">Random Data: ${book._title}</h2>
                         <span>author:  ${book._author}</span>
                         <span>category:  ${book._category}</span>
                         <span>available:  ${book._available}</span>
-
                         <div class="row w-100">
                             <div class="col-12 text-center">
                                 <button class="btn-6 btn-dark" onclick="urlRedirect('update_book.html');addCurrentBook()">Update</button>
-
                                 <button class="btn-6 btn-dark" onclick="urlRedirect('delete_book.html')">Delete</button>
                             </div>
                         </div>
-
-
                     </div>
-
                 </div>
             </div>
         `;

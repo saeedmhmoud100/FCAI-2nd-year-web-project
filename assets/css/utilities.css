@@ -46,7 +46,7 @@ nav {
     min-height: 80px;
   }
   nav.extend {
-    min-height: 318px;
+    min-height: 344px;
   }
 }
 nav > .first {
@@ -389,7 +389,7 @@ header > img {
   flex-direction: column;
   width: 100%;
 }
-.form > .input-container > input {
+.form > .input-container > input, .form > .input-container textarea {
   width: 100%;
   padding: 10px;
   border: none;

@@ -22,13 +22,8 @@ function getAllBooks() {
 
     return JSON.parse(localStorage.getItem('books'));
 }
-
-function getCurrentBook() {
-    return localStorage.getItem('currentBook');
-}
-
 function addCurrentBook(id) {
     localStorage.setItem('currentBook', id);
 }
 
-export {addBook,getAllBooks,addCurrentBook,getCurrentBook,setAllBooks};
+export {addBook,getAllBooks,addCurrentBook,setAllBooks};

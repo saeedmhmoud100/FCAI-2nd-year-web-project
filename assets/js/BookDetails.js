@@ -6,6 +6,7 @@ window.addEventListener('load', get_book_details)
 function get_book_details() {
     if (localStorage.getItem('currentBook') != null) {
         const book = getAllBooks().find(book => book._id == localStorage.getItem('currentBook'));
+
         if (book) {
             document.getElementById('bookID').innerHTML = book._id;
             document.getElementById('bookTitle').innerHTML = book._title;

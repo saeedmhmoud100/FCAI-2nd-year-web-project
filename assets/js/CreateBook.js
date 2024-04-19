@@ -7,14 +7,36 @@ function addNewBook() {
     const price = document.getElementById('bookPrice');
     const category = document.getElementById('bookCategory');
     const description = document.getElementById('bookDescription');
-    const new_book = new Book(title.value, author.value, price.value, category.value, description.value, 'assets/images/alchemist.jpg');
-    addBook(new_book);
-    title.value = '';
-    author.value = '';
-    price.value = '';
-    category.value = '';
-    description.value = '';
+    const imgData = document.getElementById('bookImage');
 
+    if (title.value !== '' && author.value !== '' && price.value !== '' && category.value !== '' && description.value !== '' && imgData.value !== '') {
+        {
+            const new_book = new Book(title.value, author.value, price.value, category.value, description.value, imgData.nextElementSibling.src);
+            addBook(new_book);
+            title.value = '';
+            author.value = '';
+            price.value = '';
+            category.value = '';
+            description.value = '';
+            imgData.nextElementSibling.src = '';
+            imgData.value = '';
+        }
+
+
+    }
+}
+document.getElementById('add-book-button').onclick = addNewBook;
+
+const handle_change_image = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        document.getElementById('bookImage').nextElementSibling.src = e.target.result;
+    }
+    // reader.readAsDataURL(file);
 }
 
-document.getElementById('add-book-button').onclick = addNewBook;
+window.onload = function() {
+document.getElementById('bookImage').onchange = handle_change_image;
+
+}
