@@ -12,6 +12,7 @@ function borrow_book() {
 }
 
 window.onload = function () {
+    document.getElementById("BookName").innerHTML = getAllBooks().filter(book => book._id == localStorage.getItem('currentBook'))[0]._title;
     document.getElementById('borrow_book_button').addEventListener('click', borrow_book);
 }
 

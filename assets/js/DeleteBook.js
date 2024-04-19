@@ -11,6 +11,9 @@ function delete_book() {
 }
 
 window.onload = function () {
+    document.getElementById("BookName").innerHTML = getAllBooks().filter(book => book._id == localStorage.getItem('currentBook'))[0]._title;
+
+
     document.getElementById('delete_book_button').addEventListener('click', delete_book);
 }
 
