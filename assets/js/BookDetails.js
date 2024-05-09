@@ -14,6 +14,7 @@ function get_book_details() {
             document.getElementById('bookCategory').innerHTML = book._category;
             document.getElementById('bookAvailable').innerHTML = book._available;
             document.getElementById('bookDescription').innerHTML = book._description;
+            document.getElementById('bookImg').src = book._image_path;
 
             if (book._available === false) {
                 document.getElementById('bookAvailable').parentNode.parentNode.lastElementChild.style.display = 'none';

@@ -575,4 +575,9 @@ header > img {
   align-items: center !important;
 }
 
+.f {
+  color: white;
+  background-size: red;
+}
+
 /*# sourceMappingURL=utilities.css.map */
