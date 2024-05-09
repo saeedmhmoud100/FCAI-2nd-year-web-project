@@ -18,23 +18,24 @@
     <nav id="nav">
         <div class="first">
             <div id="logo"><a href="index.html">Logo</a></div>
-            <img src="../static/assets/icons/menu.svg" id="toggle-icon" onclick="_=>navToggle()"/>
+            <img src="{% static 'assets/icons/menu.svg' %}" id="toggle-icon" onclick="_=>navToggle()"/>
         </div>
         <ul>
-            <li><a href="user_sign_up.html">sign up</a></li>
-            <li><a href="login.html">login</a></li>
-
             <li><a href="index.html">home</a></li>
             <li><a href="book_list_user.html">book list</a></li>
-            <li><a href="book_list.html">book list (admin)</a></li>
             <li><a href="borrowed_books_list.html">borrowed books</a></li>
+            <li><a href="">profile</a></li>
+            <li><a href="">logout</a></li>
+
+<!--            <li><a href="user_sign_up.html">sign up</a></li>-->
+<!--            <li><a href="login.html">login</a></li>-->
         </ul>
 
 
     </nav>
 
 <header>
-    <img src="../static/assets/images/header.jpg" alt="header image">
+    <img src="{% static 'assets/images/header.jpg' %}" alt="header image">
     <h1> Home</h1>
     <h2> welcome in my amazing library</h2>
 </header>
@@ -49,6 +50,6 @@
     {% block script %}
 
     {% endblock %}
-    <script src="../static/assets/js/script.js"></script>
+    <script src="{% static 'assets/js/script.js' %}"></script>
 </body>
 </html>
