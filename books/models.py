@@ -14,17 +14,17 @@ def book_cover_path(instance, filename):
     return f'book_covers/{instance.slug}/{filename}'
 
 
-
 class Viewers(BasicModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='book_viewers')
     book = models.ForeignKey('books.Book', on_delete=models.CASCADE, related_name='user_viewers')
-    count = models.IntegerField(default=0)
+    count = models.IntegerField(default=1)
 
     class Meta:
         verbose_name = 'viewer'
         verbose_name_plural = 'viewers'
         # UniqueConstraint(fields=['user', 'book'], name='unique_viewer')
         unique_together = ('user', 'book')
+
     def __str__(self):
         return f'{self.user} - {self.book} - {self.count} views'
 
@@ -43,15 +43,23 @@ class Book(BasicModel):
     def views(self):
         return self.user_viewers.aggregate(total_views=Sum('count'))['total_views']
 
+    def increase_views(self, user):
+        viewer, created = Viewers.objects.get_or_create(user=user, book=self)
+        if not created:
+            viewer.count += 1
+            viewer.save()
+
     class Meta:
         verbose_name = 'Book'
         verbose_name_plural = 'Books'
 
     def __str__(self):
         return self.title
+
+
 class BookImage(BasicModel):
     image = models.ImageField(upload_to=book_cover_path)
-    book = models.OneToOneField(Book, on_delete=models.CASCADE, related_name='image',null=True, blank=True)
+    book = models.OneToOneField(Book, on_delete=models.CASCADE, related_name='image', null=True, blank=True)
 
     class Meta:
         verbose_name = 'Book Image'
@@ -59,4 +67,3 @@ class BookImage(BasicModel):
 
     def __str__(self):
         return self.book.title
-
