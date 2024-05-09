@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="assets/css/utilities.css">
+    <link rel="stylesheet" href="../static/assets/css/utilities.css">
 </head>
 <body>
 <nav id="nav">
     <div class="first">
         <div id="logo"><a href="index.html">Logo</a></div>
-        <img src="assets/icons/menu.svg" id="toggle-icon" onclick="_=>navToggle()"/>
+        <img src="../static/assets/icons/menu.svg" id="toggle-icon" onclick="navToggle()"/>
     </div>
     <ul>
         <li><a href="user_sign_up.html">sign up</a></li>
@@ -26,8 +26,8 @@
 </nav>
 
 <header>
-    <img src="assets/images/header.jpg" alt="header image">
-    <h1> update book</h1>
+    <img src="../static/assets/images/header.jpg" alt="header image">
+    <h1> Add New Book</h1>
 </header>
 <div class="form">
     <div class="input-container">
@@ -55,23 +55,14 @@
         <input type="text" id="bookPrice" placeholder="Enter the book price" required>
     </div>
     <div class="input-container">
-        <label for="bookStatus">status:</label>
-        <select  id="bookStatus">
-            <option value="0">available</option>
-            <option value="1">not available</option>
-        </select>
-    </div>
-
-    <div class="input-container">
         <label for="bookDescription">description:</label>
         <textarea id="bookDescription" placeholder="Enter the book description" rows="5" cols="5"></textarea>
     </div>
-    <input type="submit" value="Update" id="update-book-button" class="btn-6 btn-dark">
-
+    <input type="submit" value="Add" id="add-book-button" class="btn-6 btn-dark">
 
 </div>
 
-<script src="assets/js/script.js"></script>
-<script type="module" src="assets/js/UpdateBook.js"></script>
+<script src="../static/assets/js/script.js"></script>
+<script type="module" src="../static/assets/js/CreateBook.js"></script>
 </body>
 </html>
