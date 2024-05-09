@@ -14,5 +14,8 @@ class Rating(BasicModel):
     rating = models.DecimalField(max_digits=3, decimal_places=2)
     review = models.TextField(blank=True, null=True)
 
+    class Meta:
+        verbose_name = 'rating'
+        verbose_name_plural = 'ratings'
     def __str__(self):
         return f'{self.user} - {self.book} - {self.rating}'

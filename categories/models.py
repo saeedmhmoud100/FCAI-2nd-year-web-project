@@ -8,5 +8,8 @@ from project.db.models import BasicModel
 class Category(BasicModel):
     title = models.CharField(max_length=100)
 
+    class Meta:
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
     def __str__(self):
-        return self.name
+        return self.title
