@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Sign Up | {{ block.super }}
+{% endblock %}
+
+{% block content %}
+ <form class="form" method="POST">
+    {% csrf_token %}
+        <div class="input-container">
+            <label for="user">Username</label>
+            <input type="text" name="username" id="user"  placeholder="Enter your username">
+        </div>
+        <div class="input-container">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" placeholder="example@gmail.com" >
+
+        </div>
+        <div class="input-container">
+            <label for="pass">Password:</label>
+            <input type="password" name="password" id="pass"   placeholder="Enter your password">
+
+        </div>
+        <div class="input-container">
+            <label for="confirm">Confirm Password</label>
+            <input type="password" name="re-password" id="confirm" placeholder="Re-enter your password" >
+
+        </div>
+        <div>
+            <input type="radio" value="false" name="is_admin" id="radio1" placeholder="example@gmail.com" checked> <label for='radio1'>user</label>
+            <input type="radio" value="true" name="is_admin" id="radio2" placeholder="example@gmail.com" > <label for="radio2">admin</label>
+        </div>
+
+        <input type="submit" name="Submit" value="Submit" id="signup-button" class="btn-6 btn-dark">
+    </form>
+
+
+{% endblock %}
