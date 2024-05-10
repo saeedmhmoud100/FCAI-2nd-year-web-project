@@ -22,13 +22,20 @@
         </div>
         <ul>
             <li><a href="index.html">home</a></li>
-            <li><a href="book_list_user.html">book list</a></li>
+            <li><a href="{% url 'book_list' %}">book list</a></li>
             <li><a href="borrowed_books_list.html">borrowed books</a></li>
-            <li><a href="">profile</a></li>
-            <li><a href="">logout</a></li>
 
-<!--            <li><a href="sign_up.html">sign up</a></li>-->
-<!--            <li><a href="login.html">login</a></li>-->
+            {% if user.is_anonymous %}
+                <li><a href="{% url 'sign_up' %}">sign up</a></li>
+                <li><a href="{% url 'login' %}">login</a></li>
+            {% else %}
+
+                {% if user.is_superuser %}
+                    <li><a href="">dashboard</a></li>
+                {% endif %}
+                <li><a href="">logout</a></li>
+            {% endif %}
+
         </ul>
 
 
@@ -39,7 +46,6 @@
     <h1> Home</h1>
     <h2> welcome in my amazing library</h2>
 </header>
-
     {% block content %}
 
     {% endblock %}

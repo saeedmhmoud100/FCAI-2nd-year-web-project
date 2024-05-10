@@ -20,8 +20,11 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", lambda request: render(request,'project/index.html')),
+    path("", lambda request: render(request,'project/index.html'),name='home'),
     path("accounts/", include("accounts.urls")),
-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    path("books/", include("books.urls")),
+
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

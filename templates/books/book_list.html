@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load custom_filters %}
+{% load static %}
+
+
+{% block title %}
+Book List | block.super
+{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 search-box">
+            <input placeholder="Search..." type="search" id="search">
+            <button class="btn-1    btn-dark"> search</button>
+        </div>
+    </div>
+
+    <div class="row" id="book_list_user">
+        {% for book in books %}
+
+
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="card">
+                <img src={{book.image.url}} alt="book image">
+                <div class="card-body">
+                    <span class="id" style="display: none;">{{book.id}}</span>
+                    <h2 class="card-title">{{book.title}}</h2>
+                    <span>author: {{book.author}}</span>
+                    <span>category: {{book.category}}</span>
+                    <span>available: {{book.is_borrowed|not_gate}}</span>
+
+                    <div class="row w-100">
+                        <div class="col-12 text-center">
+                                <button class="btn-6 btn-dark">details</button>
+                            {% if user.is_superuser %}
+                                <button class="btn-6 btn-dark">Update</button>
+                                <button class="btn-6 btn-dark">Delete</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+</div>
+
+
+{% endblock %}
+{% block script %}
+
+<!--<script type="module" src="{% static 'assets/js/book_list_user.js' %}"></script>-->
+
+{% endblock %}

@@ -11,7 +11,7 @@ User = settings.AUTH_USER_MODEL
 
 
 def book_cover_path(instance, filename):
-    return f'book_covers/{instance.slug}/{filename}'
+    return f'uploads/books/{instance.slug}/{filename}'
 
 
 class Viewers(BasicModel):
@@ -64,6 +64,11 @@ class BookImage(BasicModel):
     class Meta:
         verbose_name = 'Book Image'
         verbose_name_plural = 'Book Images'
+
+    @property
+    def url(self):
+        return  self.image.url
+
 
     def __str__(self):
         return self.book.title
