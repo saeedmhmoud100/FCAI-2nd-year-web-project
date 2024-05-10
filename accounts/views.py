@@ -1,5 +1,9 @@
 from django.contrib.auth import login, authenticate, get_user_model
+from django.db.models import Q
 from django.shortcuts import render, redirect
+from django.contrib import  messages
+
+from accounts.forms import SignUpForm
 
 # Create your views here.
 
@@ -22,20 +26,32 @@ def login_view(request):
 
 
 def signup_view(request):
-
     if request.method == 'POST':
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        re_password2 = request.POST.get('re-password')
-        if password == re_password2:
-            u = User.objects.create(username=username, email=email, password=password)
-            if request.POST.get('is_admin') == 'true':
-                u.is_admin = True
-                u.is_staff = True
-            u.save()
-        else:
-            return render(request, 'accounts/sign_up.html', {'error': 'Password does not match'})
+        form = SignUpForm(request.POST)
+        print(form.data)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password')
+            re_password = form.cleaned_data.get('re_password')
+            is_admin = form.cleaned_data.get('is_admin')
+            print(username, email, password, re_password, is_admin)
+            if password != re_password:
+                messages.add_message(request,messages.ERROR, 'Passwords do not match')
+            elif User.objects.filter(Q(username=username)):
+                messages.add_message(request,messages.ERROR, 'Username already exists')
+            elif User.objects.filter(Q(email=email)):
+                messages.add_message(request,messages.ERROR, 'Email already exists')
+            else:
+                user = User.objects.create_user(username=username, email=email, password=password)
+                if is_admin:
+                    user.is_staff = True
+                    user.is_superuser = True
+                    user.save()
+                login(request, user)
+                return redirect('profile')
 
+    else:
+        form = SignUpForm()
 
-    return render(request, 'accounts/sign_up.html')
+    return render(request, 'accounts/sign_up.html', {'form': form})

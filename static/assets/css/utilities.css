@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Playball";
-  src: url("../fonts/Playball-Regular.ttf") format("truetype");
+  src: url("Playball-Regular.ttf") format("truetype");
 }
 :root {
   font-size: 19px;
@@ -575,5 +575,21 @@ header > img {
   align-items: center !important;
 }
 
+.alert {
+  width: 100%;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #ccc;
+  margin-top: 20px;
+}
+
+.alert-error {
+  background-color: #ffcccc;
+  color: #ff0000;
+}
 
 /*# sourceMappingURL=utilities.css.map */

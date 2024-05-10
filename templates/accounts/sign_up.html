@@ -6,34 +6,47 @@
 {% endblock %}
 
 {% block content %}
- <form class="form" method="POST">
+<div class="container">
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+</div>
+
+<form method="POST" class="form">
     {% csrf_token %}
-        <div class="input-container">
-            <label for="user">Username</label>
-            <input type="text" name="username" id="user"  placeholder="Enter your username">
-        </div>
-        <div class="input-container">
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" placeholder="example@gmail.com" >
-
-        </div>
-        <div class="input-container">
-            <label for="pass">Password:</label>
-            <input type="password" name="password" id="pass"   placeholder="Enter your password">
-
-        </div>
-        <div class="input-container">
-            <label for="confirm">Confirm Password</label>
-            <input type="password" name="re-password" id="confirm" placeholder="Re-enter your password" >
-
-        </div>
-        <div>
+    <div class="input-container">
+        <label for="{{ form.username.id_for_label }}">Username</label>
+        {{ form.username }}
+    </div>
+    <div class="input-container">
+        <label for="{{ form.email.id_for_label }}">Email</label>
+        {{ form.email }}
+    </div>
+    <div class="input-container">
+        <label for="{{ form.password.id_for_label }}">Password</label>
+        {{ form.password }}
+    </div>
+    <div class="input-container">
+        <label for="{{ form.re_password.id_for_label }}">Re-enter Password</label>
+        {{ form.re_password }}
+    </div>
+    <div class="input-container">
+        <div class="text-center">
             <input type="radio" value="false" name="is_admin" id="radio1" placeholder="example@gmail.com" checked> <label for='radio1'>user</label>
             <input type="radio" value="true" name="is_admin" id="radio2" placeholder="example@gmail.com" > <label for="radio2">admin</label>
         </div>
+    </div>
+    <input type="submit" name="Submit" value="Submit" id="signup-button" class="btn-6 btn-dark">
+</form>
 
-        <input type="submit" name="Submit" value="Submit" id="signup-button" class="btn-6 btn-dark">
-    </form>
 
+{% endblock %}
 
+{% block script %}
+    <script src="{% static 'js/sign_up.js' %}"></script>
 {% endblock %}

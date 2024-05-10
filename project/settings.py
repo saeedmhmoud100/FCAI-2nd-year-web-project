@@ -140,3 +140,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 AUTHENTICATION_BACKENDS = ['accounts.backend.CustomBackend']
+
+MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
