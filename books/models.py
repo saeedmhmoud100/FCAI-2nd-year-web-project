@@ -1,9 +1,11 @@
 from django.conf import settings
 from django.db import models
 from django.db.models import Sum, UniqueConstraint, Avg
+from django.db.models.signals import pre_save
 
 from categories.models import Category
 from project.db.models import BasicModel
+from project.db.signals import unique_slugify_pre_save
 
 # Create your models here.
 
@@ -76,3 +78,8 @@ class BookImage(BasicModel):
 
     def __str__(self):
         return self.book.title
+
+
+pre_save.connect(unique_slugify_pre_save, sender=Book)
+pre_save.connect(unique_slugify_pre_save, sender=Viewers)
+pre_save.connect(unique_slugify_pre_save, sender=BookImage)

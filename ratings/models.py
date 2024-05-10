@@ -1,8 +1,9 @@
 from django.conf import settings
 from django.db import models
+from django.db.models.signals import pre_save
 
 from project.db.models import BasicModel
-
+from project.db.signals import unique_slugify_pre_save
 
 # Create your models here.
 
@@ -19,3 +20,5 @@ class Rating(BasicModel):
         verbose_name_plural = 'ratings'
     def __str__(self):
         return f'{self.user} - {self.book} - {self.rating}'
+
+pre_save.connect(unique_slugify_pre_save, sender=Rating)
