@@ -17,7 +17,7 @@ def book_cover_path(instance, filename):
 
 
 class Viewers(BasicModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='book_viewers')
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='book_viewers', null=True)
     book = models.ForeignKey('books.Book', on_delete=models.CASCADE, related_name='user_viewers')
     count = models.IntegerField(default=1)
 
@@ -31,6 +31,28 @@ class Viewers(BasicModel):
         return f'{self.user} - {self.book} - {self.count} views'
 
 
+class queryset(models.QuerySet):
+    def get_borrowed_by_user(self, user):
+        return self.filter(borrower=user)
+
+
+class BookManager(models.Manager):
+    def get_queryset(self):
+        return queryset(self.model, using=self._db)
+
+    def active(self):
+        return self.get_queryset().filter(active=True)
+
+    def inactive(self):
+        return self.get_queryset().filter(active=False)
+
+    def available(self):
+        return self.get_queryset().filter(is_borrowed=False)
+
+    def borrowed(self):
+        return self.get_queryset().filter(is_borrowed=True)
+
+
 class Book(BasicModel):
     uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='books')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='books')
@@ -39,7 +61,12 @@ class Book(BasicModel):
     author = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=5, decimal_places=2)
     description = models.TextField()
-    is_borrowed = models.BooleanField(default=False)
+    borrower = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='borrowed_books', null=True, blank=True)
+    objects = BookManager()
+
+    @property
+    def is_borrowed(self):
+        return self.borrower is not None
 
     @property
     def rating(self):
@@ -73,12 +100,10 @@ class BookImage(BasicModel):
 
     @property
     def url(self):
-        return  self.image.url
-
+        return self.image.url
 
     def __str__(self):
         return self.book.title
-
 
     def save(self, *args, **kwargs):
         if not self.slug:

@@ -6,11 +6,11 @@
   font-size: 1.5rem;
   line-height: 0.7;
 }
-.details-container > .row:first-child img {
+.details-container > .row:first-child > img {
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) inset;
-  height: 345px;
+  height: 400px;
   object-fit: cover;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) inset;
 }
 .details-container > .row:first-child span {
   font-size: 1.2rem;

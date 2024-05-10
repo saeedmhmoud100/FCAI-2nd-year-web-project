@@ -8,13 +8,19 @@ from books.models import Book
 
 
 class BookListView(ListView):
-    model = Book
-    template_name = 'books/book_list.html'
+    queryset = Book.objects.active()
     context_object_name = 'books'
+
+
+class BorrowedBookListView(ListView):
+    queryset = Book.objects.active()
+    template_name = 'books/borrowed_books_list.html'
+    def get_queryset(self):
+        return self.queryset.get_borrowed_by_user(self.request.user)
 
 
 class BookDetailView(DetailView):
     model = Book
 
     def get_queryset(self):
-        return Book.objects.filter(slug=self.kwargs['slug'])
+        return Book.objects.active().filter(slug=self.kwargs['slug'])

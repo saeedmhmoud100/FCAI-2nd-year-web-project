@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Playball";
-  src: url("Playball-Regular.ttf") format("truetype");
+  src: url("../fonts/Playball-Regular.ttf") format("truetype");
 }
 :root {
   font-size: 19px;
@@ -531,6 +531,7 @@ header > img {
   width: 100%;
   object-fit: cover;
   border-radius: 10px 10px 0 0;
+  height: 200px;
 }
 .card > .card-body {
   padding: 10px;
