@@ -1,4 +1,4 @@
-from django.contrib.auth import login, authenticate, get_user_model
+from django.contrib.auth import login, authenticate, get_user_model, logout
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -57,3 +57,9 @@ def signup_view(request):
         form = SignUpForm()
 
     return render(request, 'accounts/sign_up.html', {'form': form})
+
+
+def logout_view(request):
+    if request.user.is_authenticated:
+        logout(request)
+    return redirect('home')

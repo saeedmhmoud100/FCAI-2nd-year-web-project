@@ -17,23 +17,23 @@
 <body>
     <nav id="nav">
         <div class="first">
-            <div id="logo"><a href="index.html">Logo</a></div>
+            <div id="logo"><a href="{% url 'home' %}">Logo</a></div>
             <img src="{% static 'assets/icons/menu.svg' %}" id="toggle-icon" onclick="_=>navToggle()"/>
         </div>
         <ul>
-            <li><a href="index.html">home</a></li>
+            <li><a href="{% url 'home' %}">home</a></li>
             <li><a href="{% url 'book_list' %}">book list</a></li>
             <li><a href="borrowed_books_list.html">borrowed books</a></li>
 
             {% if user.is_anonymous %}
-                <li><a href="{% url 'sign_up' %}">sign up</a></li>
+                <li><a href="{% url 'signup' %}">sign up</a></li>
                 <li><a href="{% url 'login' %}">login</a></li>
             {% else %}
 
                 {% if user.is_superuser %}
                     <li><a href="">dashboard</a></li>
                 {% endif %}
-                <li><a href="">logout</a></li>
+                <li><a href="{% url 'logout' %}">logout</a></li>
             {% endif %}
 
         </ul>
