@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-from django.db.models import Sum, UniqueConstraint
+from django.db.models import Sum, UniqueConstraint, Avg
 
 from categories.models import Category
 from project.db.models import BasicModel
@@ -38,6 +38,10 @@ class Book(BasicModel):
     price = models.DecimalField(max_digits=5, decimal_places=2)
     description = models.TextField()
     is_borrowed = models.BooleanField(default=False)
+
+    @property
+    def rating(self):
+        return self.ratings.aggregate(avg_rating=Avg('rating'))['avg_rating'] or '~'
 
     @property
     def views(self):

@@ -3,7 +3,7 @@ import {getAllBooks,addCurrentBook} from "./myLocalStorage.js";
 
 function details_button(bookId) {
     addCurrentBook(bookId);
-    urlRedirect('details.html');
+    urlRedirect('book_detail.html');
 }
 
 function borrowed_book_list() {

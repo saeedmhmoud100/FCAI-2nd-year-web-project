@@ -9,6 +9,8 @@
 .details-container > .row:first-child img {
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) inset;
+  height: 345px;
+  object-fit: cover;
 }
 .details-container > .row:first-child span {
   font-size: 1.2rem;

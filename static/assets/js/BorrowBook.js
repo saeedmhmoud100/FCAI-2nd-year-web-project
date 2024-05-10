@@ -7,7 +7,7 @@ function borrow_book() {
         }
         return book
     }));
-    urlRedirect('details.html');
+    urlRedirect('book_detail.html');
 
 }
 

@@ -3,7 +3,7 @@ import {getAllBooks,addCurrentBook} from "./myLocalStorage.js";
 
 function delete_button(bookId) {
     addCurrentBook(bookId);
-    urlRedirect('details.html');
+    urlRedirect('book_detail.html');
 }
 
 function book_list_user() {
