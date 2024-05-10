@@ -9,7 +9,6 @@ def get_random_string(size=5, chars=string.ascii_lowercase + string.digits):
 
 
 def get_unique_slug(instance, new_slug=None):
-    print(instance.title,instance.slug)
     if new_slug is None:
         slug = slugify(instance.title)
     else:

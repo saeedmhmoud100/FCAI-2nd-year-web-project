@@ -5,7 +5,7 @@ from django.db.models.signals import pre_save
 
 from categories.models import Category
 from project.db.models import BasicModel
-from project.db.signals import unique_slugify_pre_save
+from project.db.signals import unique_slugify_pre_save, slugify_per_save
 
 # Create your models here.
 
@@ -80,6 +80,12 @@ class BookImage(BasicModel):
         return self.book.title
 
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = self.book.slug + '-image'
+            self.save()
+        super(BookImage, self).save(*args, **kwargs)
+
+
 pre_save.connect(unique_slugify_pre_save, sender=Book)
 pre_save.connect(unique_slugify_pre_save, sender=Viewers)
-pre_save.connect(unique_slugify_pre_save, sender=BookImage)
