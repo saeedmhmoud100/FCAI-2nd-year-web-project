@@ -2,10 +2,11 @@ from django.conf import settings
 from django.db import models
 from django.db.models import Sum, UniqueConstraint, Avg
 from django.db.models.signals import pre_save, post_save
+from django.urls import reverse
 
 from categories.models import Category
 from project.db.models import BasicModel
-from project.db.signals import unique_slugify_pre_save, slugify_per_save, slugify_book_image_post_save
+from project.db.signals import unique_slugify_pre_save, slugify_book_image_post_save
 
 # Create your models here.
 
@@ -86,6 +87,9 @@ class Book(BasicModel):
         if not created:
             viewer.count += 1
             viewer.save()
+
+    def get_absolute_url(self):
+        return reverse('book_details', args=[self.slug])
 
     class Meta:
         verbose_name = 'Book'
