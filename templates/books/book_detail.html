@@ -31,8 +31,13 @@
             <div>price per day: <span id="bookPrice">  {{object.price}}$</span></div><br/>
             <div>available: <span id="bookAvailable">  {{object.is_borrowed|not}}</span></div><br/>
 
-
-            <button class="btn-2 btn-dark" onclick="urlRedirect('{% url 'borrow_book' object.slug %}')">Borrow</button>
+            {% if object.is_borrowed %}
+                {% if request.user.id == object.borrower.id %}
+                    <button class="btn-2 btn-dark" onclick="urlRedirect('{% url 'return_book' object.slug %}')">Return</button>
+                {% endif %}
+            {% else %}
+                <button class="btn-2 btn-dark" onclick="urlRedirect('{% url 'borrow_book' object.slug %}')">Borrow</button>
+            {% endif %}
         </div>
     </div>
     <div class="row">

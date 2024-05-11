@@ -100,3 +100,13 @@ class BorrowBookView(View):
         book.save()
         messages.add_message(request, messages.SUCCESS, 'Book borrowed successfully')
         return redirect('borrowed_books')
+
+class ReturnBookView(View):
+    def get(self, request, slug):
+        book = Book.objects.active().get(slug=slug)
+        if book.borrower == request.user:
+            book.borrower = None
+            book.save()
+            messages.add_message(request, messages.SUCCESS, 'Book returned successfully')
+            return redirect('borrowed_books')
+        return redirect('book_details', slug=slug)
