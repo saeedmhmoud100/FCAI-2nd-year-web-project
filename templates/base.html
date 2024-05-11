@@ -44,11 +44,15 @@
 
     </nav>
 
+{% block header %}
 <header>
     <img src="{% static 'assets/images/header.jpg' %}" alt="header image">
     <h1> Home</h1>
     <h2> welcome in my amazing library</h2>
 </header>
+{% endblock %}
+
+
 
 
     {% if messages %}

@@ -1,10 +1,11 @@
 from django.contrib import messages
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from books.forms import CreateBookForm, UpdateBookForm
-from books.models import Book, BookImage
+from books.models import Book
 
 
 # Create your views here.
@@ -26,7 +27,7 @@ class BookDetailView(DetailView):
     model = Book
 
     def get_queryset(self):
-        if(self.request.user.is_authenticated):
+        if (self.request.user.is_authenticated):
             Book.objects.active().get(slug=self.kwargs['slug']).increase_views(self.request.user)
         return Book.objects.active().filter(slug=self.kwargs['slug'])
 
@@ -66,13 +67,19 @@ class BookUpdateView(UpdateView):
         book.save()
         return super().form_valid(form)
 
-    def form_invalid(self, form):
-        print(form.errors)
-        return super().form_invalid(form)
-
     def get_success_url(self):
         book_url = self.object.get_absolute_url()
         success_message = mark_safe(f'Book updated successfully <a href="{book_url}">View Book</a>')
         messages.add_message(self.request, messages.SUCCESS, success_message)
         return reverse('update_book', args=[self.object.slug])
         # return reverse('book_details', args=[self.object.slug])
+
+
+def delete_book(request, slug):
+    book = Book.objects.active().get(slug=slug)
+    print(book, slug)
+    if request.method == 'POST':
+        book.delete()
+        messages.add_message(request, messages.SUCCESS, 'Book deleted successfully')
+        return redirect('book_list')
+    return render(request, 'books/delete_book.html', {'object': book})

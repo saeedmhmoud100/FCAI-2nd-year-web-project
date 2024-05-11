@@ -46,8 +46,8 @@ Book List | block.super
                                 details
                             </button>
                             {% if user.is_superuser %}
-                            <button class="btn-6 btn-dark" onclick=urlRedirect(`{% url "update_book" book.slug %}`)>Update</button>
-                            <button class="btn-6 btn-dark"> Delete</button>
+                            <button class="btn-6 btn-dark" onclick="urlRedirect(`{{ book.get_update_url }}`)">Update</button>
+                            <button class="btn-6 btn-dark" onclick="urlRedirect(`{{ book.get_delete_url }}`)"> Delete</button>
                             {% endif %}
                         </div>
                     </div>

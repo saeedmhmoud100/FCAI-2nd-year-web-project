@@ -74,6 +74,7 @@ class Book(BasicModel):
     def is_borrowed(self):
         return self.borrower is not None
 
+
     @property
     def rating(self):
         return self.ratings.aggregate(avg_rating=Avg('rating'))['avg_rating'] or '~'
@@ -90,6 +91,13 @@ class Book(BasicModel):
 
     def get_absolute_url(self):
         return reverse('book_details', args=[self.slug])
+
+    @property
+    def get_update_url(self):
+        return reverse('update_book', args=[self.slug])
+
+    def get_delete_url(self):
+        return reverse('delete_book', args=[self.slug])
 
     class Meta:
         verbose_name = 'Book'

@@ -29,7 +29,7 @@
             <div>viewers: <span id="bookViewers">  {{object.views}}</span></div><br/>
             <div>rating:  <span id="bookRating">  {{object.rating}}{% if object.rating != '~' %}/5{% endif %} </span></div><br/>
             <div>price per day: <span id="bookPrice">  {{object.price}}$</span></div><br/>
-            <div>available: <span id="bookAvailable">  {{object.available|not}}</span></div><br/>
+            <div>available: <span id="bookAvailable">  {{object.is_borrowed|not}}</span></div><br/>
 
 
             <button class="btn-2 btn-dark" onclick="urlRedirect('borrow_book.html')">Borrow</button>
