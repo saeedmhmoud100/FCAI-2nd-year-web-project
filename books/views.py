@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils.safestring import mark_safe
+from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from books.forms import CreateBookForm, UpdateBookForm
@@ -83,3 +84,19 @@ def delete_book(request, slug):
         messages.add_message(request, messages.SUCCESS, 'Book deleted successfully')
         return redirect('book_list')
     return render(request, 'books/delete_book.html', {'object': book})
+
+
+class BorrowBookView(View):
+    def get(self, request, slug):
+        book = Book.objects.active().get(slug=slug)
+        if book.is_borrowed:
+            messages.add_message(request, messages.ERROR, 'Book is already borrowed')
+            return redirect(reverse('book_details', args=[slug]))
+        return render(request, 'books/borrow_book.html',{'object': book})
+
+    def post(self, request, slug):
+        book = Book.objects.active().get(slug=slug)
+        book.borrower = request.user
+        book.save()
+        messages.add_message(request, messages.SUCCESS, 'Book borrowed successfully')
+        return redirect('borrowed_books')

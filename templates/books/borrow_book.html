@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title %}Borrow Book | block.super {% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row flex-center">
+        <h1>Are you sure you want to borrow this book: <span id="BookName"> {{object.title}}</span></h1>
+    </div>
+    <div class="row flex-center">
+        <form method="post" class="col-6 no-wrap gap">
+            {% csrf_token %}
+            <button type="submit" class="btn-3 btn-dark" id="borrow_book_button" >borrow</button>
+            <button type="button" class="btn-3 btn-dark" onclick="urlRedirect(`{{object.get_absolute_url}} `)">Cancel</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
