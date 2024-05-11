@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Add Book | {{block.super}} {% endblock %}
+
+{% block content %}
+
+{% if messages %}
+    <div class="container">
+
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+
+<form method="post" class="form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="input-container">
+        <label for="{{bookImage}}">book image:</label>
+        <div style="display: flex;align-items: center">
+
+            {{ form.image }}
+            <img src width="80">
+        </div>
+    </div>
+    <div class="input-container">
+        <label for="bookTitle">book title:</label>
+        {{ form.title}}
+    </div>
+    <div class="input-container">
+        <label for="bookAuthor">author:</label>
+       {{ form.author}}
+    </div>
+    <div class="input-container">
+        <label for="bookCategory">category:</label>
+        {{ form.category}}
+    </div>
+    <div class="input-container">
+        <label for="bookPrice">price:</label>
+        {{ form.price}}
+    </div>
+    <div class="input-container">
+        <label for="bookDescription">description:</label>
+        <textarea id="bookDescription" name="description" placeholder="Enter the book description" rows="5" cols="5"></textarea>
+    </div>
+    <input type="submit" value="Add" id="add-book-button" class="btn-6 btn-dark">
+
+</form>
+{% endblock %}

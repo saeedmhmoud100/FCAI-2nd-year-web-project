@@ -1,11 +1,11 @@
 from django.conf import settings
 from django.db import models
 from django.db.models import Sum, UniqueConstraint, Avg
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_save
 
 from categories.models import Category
 from project.db.models import BasicModel
-from project.db.signals import unique_slugify_pre_save, slugify_per_save
+from project.db.signals import unique_slugify_pre_save, slugify_per_save, slugify_book_image_post_save
 
 # Create your models here.
 
@@ -64,6 +64,11 @@ class Book(BasicModel):
     borrower = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='borrowed_books', null=True, blank=True)
     objects = BookManager()
 
+    def set_image(self, image):
+        book_image, created = BookImage.objects.get_or_create(book=self)
+        book_image.image = image
+        book_image.save()
+
     @property
     def is_borrowed(self):
         return self.borrower is not None
@@ -91,7 +96,7 @@ class Book(BasicModel):
 
 
 class BookImage(BasicModel):
-    image = models.ImageField(upload_to=book_cover_path)
+    image = models.ImageField(upload_to=book_cover_path, null=True, blank=True)
     book = models.OneToOneField(Book, on_delete=models.CASCADE, related_name='image', null=True, blank=True)
 
     class Meta:
@@ -105,12 +110,7 @@ class BookImage(BasicModel):
     def __str__(self):
         return self.book.title
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = self.book.slug + '-image'
-            self.save()
-        super(BookImage, self).save(*args, **kwargs)
-
 
 pre_save.connect(unique_slugify_pre_save, sender=Book)
 pre_save.connect(unique_slugify_pre_save, sender=Viewers)
+post_save.connect(slugify_book_image_post_save, sender=BookImage)
