@@ -43,7 +43,7 @@ class BookCreateView(CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        book_url = reverse('book_details', args=[self.object.slug])
+        book_url = self.object.get_absolute_url()
         success_message = mark_safe(f'Book added successfully <a href="{book_url}">View Book</a>')
         messages.add_message(self.request, messages.SUCCESS, success_message)
         return reverse('add_book')
