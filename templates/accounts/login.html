@@ -9,17 +9,6 @@
 
 {% block content %}
 
-
-{% if messages %}
-<div class="container">
-    {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">
-            {{ message }}
-        </div>
-    {% endfor %}
-</div>
-{% endif %}
-
 <form class="form" method="POST" >
     {% csrf_token %}
     <div class="input-container">

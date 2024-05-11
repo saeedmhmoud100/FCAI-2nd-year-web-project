@@ -49,6 +49,18 @@
     <h1> Home</h1>
     <h2> welcome in my amazing library</h2>
 </header>
+
+
+    {% if messages %}
+    <div class="container">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
     {% block content %}
 
     {% endblock %}

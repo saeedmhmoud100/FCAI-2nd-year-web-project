@@ -1,44 +1,55 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %} Add Book | {{block.super}} {% endblock %}
-
+{% block title %}Update Book | {{block.super}} {% endblock %}
 {% block content %}
 
-<form method="post" class="form" enctype="multipart/form-data">
+
+<form class="form" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="input-container">
-        <label for="{{bookImage}}">book image:</label>
+        <label for="bookImage">book image:</label>
         <div style="display: flex;align-items: center">
 
-            {{ form.image }}
-            <img src width="80">
+            {{form.image}}
+            <img src="{{form.instance.image.url}}" width="80">
         </div>
     </div>
     <div class="input-container">
         <label for="bookTitle">book title:</label>
-        {{ form.title}}
+        {{form.title}}
     </div>
     <div class="input-container">
         <label for="bookAuthor">author:</label>
-       {{ form.author}}
+        {{form.author}}
     </div>
     <div class="input-container">
         <label for="bookCategory">category:</label>
-        {{ form.category}}
+        {{form.category}}
     </div>
     <div class="input-container">
         <label for="bookPrice">price:</label>
-        {{ form.price}}
+        {{form.price}}
     </div>
     <div class="input-container">
-        <label for="bookDescription">description:</label>
-        <textarea id="bookDescription" name="description" placeholder="Enter the book description" rows="5" cols="5"></textarea>
+        <label for="bookStatus">Borrower:</label>
+        {{form.borrower}}
     </div>
-    <input type="submit" value="Add" id="add-book-button" class="btn-6 btn-dark">
+
+    <div class="input-container">
+        <label for="bookDescription">description:</label>
+        {{form.description}}
+    </div>
+    <input type="submit" value="Update" id="update-book-button" class="btn-6 btn-dark">
+
 
 </form>
+
+
 {% endblock %}
 
 {% block script %}
-<script src="{% static 'js/CreateBook.js' %}"></script>
+
+
+<script src="{% static 'assets/js/UpdateBook.js' %}"></script>
+
 {% endblock %}

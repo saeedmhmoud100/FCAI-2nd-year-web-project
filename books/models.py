@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-from django.db.models import Sum, UniqueConstraint, Avg
+from django.db.models import Sum, Avg
 from django.db.models.signals import pre_save, post_save
 from django.urls import reverse
 
@@ -80,7 +80,7 @@ class Book(BasicModel):
 
     @property
     def views(self):
-        return self.user_viewers.aggregate(total_views=Sum('count'))['total_views']
+        return self.user_viewers.aggregate(total_views=Sum('count'))['total_views'] or 0
 
     def increase_views(self, user):
         viewer, created = Viewers.objects.get_or_create(user=user, book=self)
@@ -116,5 +116,4 @@ class BookImage(BasicModel):
 
 
 pre_save.connect(unique_slugify_pre_save, sender=Book)
-pre_save.connect(unique_slugify_pre_save, sender=Viewers)
 post_save.connect(slugify_book_image_post_save, sender=BookImage)
