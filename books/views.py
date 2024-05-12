@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils.safestring import mark_safe
@@ -14,6 +15,32 @@ from books.models import Book
 class BookListView(ListView):
     queryset = Book.objects.active()
     context_object_name = 'books'
+
+    def get_queryset(self):
+        q = self.request.GET.get('q', '')
+        search_by = self.request.GET.get('search_by', 'all')
+        queryset = self.queryset
+        if not q:
+            return queryset
+
+        if search_by == 'title':
+            queryset = self.queryset.filter(title__icontains=q)
+        elif search_by == 'author':
+            queryset = self.queryset.filter(author__icontains=q)
+        elif search_by == 'description':
+            queryset = self.queryset.filter(description__icontains=q)
+        elif search_by == 'category':
+            queryset = self.queryset.filter(category__title__icontains=q)
+        elif q == 'all':
+            queryset = self.queryset.filter(
+                Q(title__icontains=q) | Q(author__icontains=q) | Q(category__title__icontains=q))
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['q'] = self.request.GET.get('q', '')
+        context['search_by'] = self.request.GET.get('search_by', 'all')
+        return context
 
 
 class BorrowedBookListView(ListView):
@@ -92,7 +119,7 @@ class BorrowBookView(View):
         if book.is_borrowed:
             messages.add_message(request, messages.ERROR, 'Book is already borrowed')
             return redirect(reverse('book_details', args=[slug]))
-        return render(request, 'books/borrow_book.html',{'object': book})
+        return render(request, 'books/borrow_book.html', {'object': book})
 
     def post(self, request, slug):
         book = Book.objects.active().get(slug=slug)
@@ -100,6 +127,7 @@ class BorrowBookView(View):
         book.save()
         messages.add_message(request, messages.SUCCESS, 'Book borrowed successfully')
         return redirect('borrowed_books')
+
 
 class ReturnBookView(View):
     def get(self, request, slug):

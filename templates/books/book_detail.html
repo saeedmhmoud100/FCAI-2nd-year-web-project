@@ -29,7 +29,12 @@
             <div>viewers: <span id="bookViewers">  {{object.views}}</span></div><br/>
             <div>rating:  <span id="bookRating">  {{object.rating}}{% if object.rating != '~' %}/5{% endif %} </span></div><br/>
             <div>price per day: <span id="bookPrice">  {{object.price}}$</span></div><br/>
-            <div>available: <span id="bookAvailable">  {{object.is_borrowed|not}}</span></div><br/>
+            <div class="row" style="display:flex;flex-direction: row;align-items: center">
+                <div class="col-3">available: <span id="bookAvailable">  {{object.is_borrowed|not}}</span></div>
+                <div class="col-9">
+                    <img class="love-icon" src="{% static 'assets/icons/heart-solid.svg' %}" alt="">
+                </div>
+            </div><br/>
 
             {% if object.is_borrowed %}
                 {% if request.user.id == object.borrower.id %}

@@ -6,7 +6,7 @@
   font-size: 1.5rem;
   line-height: 0.7;
 }
-.details-container > .row:first-child img {
+.details-container > .row:first-child > div > img {
   border-radius: 10px;
   height: 400px;
   object-fit: cover;

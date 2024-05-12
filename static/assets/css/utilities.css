@@ -497,7 +497,7 @@ header > img {
   justify-content: center;
 }
 .search-box > input {
-  width: 90%;
+  width: 80%;
   padding: 10px;
   border: none;
   border-radius: 5px 0 0 5px;
@@ -507,6 +507,15 @@ header > img {
   .search-box > input {
     width: 80%;
   }
+}
+.search-box > select {
+  width: 10%;
+  padding: 10px;
+  border: none;
+  margin-top: 5px;
+  outline: none;
+  border-left: 1px solid black;
+  cursor: pointer;
 }
 .search-box > button {
   border-radius: 0 5px 5px 0;
@@ -601,6 +610,12 @@ header > img {
 .alert-warning {
   background-color: #ffffcc;
   color: #ffff00;
+}
+
+.love-icon {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=utilities.css.map */
