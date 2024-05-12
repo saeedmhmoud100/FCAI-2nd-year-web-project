@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.db.models import Q
+from django.db.models import Q, Avg, Sum
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils.safestring import mark_safe
@@ -33,13 +33,13 @@ class BookListView(ListView):
         elif ordering == 'price_acs':
             queryset = queryset.order_by('price')
         elif ordering == 'rating_desc':
-            queryset = queryset.order_by('-rating')
+            queryset = queryset.annotate(avg_rating=Avg('ratings__rating')).order_by('-avg_rating')
         elif ordering == 'rating_acs':
-            queryset = queryset.order_by('rating')
+            queryset = queryset.annotate(avg_rating=Avg('ratings__rating')).order_by('avg_rating')
         elif ordering == 'views_desc':
-            queryset = queryset.order_by('-views')
+            queryset = queryset.annotate(total_views=Sum('user_viewers__count')).order_by('-total_views')
         elif ordering == 'views_acs':
-            queryset = queryset.order_by('views')
+            queryset = queryset.annotate(total_views=Sum('user_viewers__count')).order_by('total_views')
         elif ordering == 'time_desc':
             queryset = queryset.order_by('-created_at')
         elif ordering == 'time_acs':
@@ -72,8 +72,8 @@ class BookListView(ListView):
         price_to = self.request.GET.get('price_to', 100000000000000000000)
         if available != '' and available:
             queryset = queryset.filter(borrower=None)
-        # if rating:
-        #     queryset = queryset.filter(ratings=rating)
+        if rating != '' and int(rating) > 0:
+            queryset = queryset.annotate(avg_rating=Avg('ratings__rating')).filter(avg_rating=rating)
         if price_from < price_to:
             queryset = queryset.filter(price__range=(price_from, price_to))
         return queryset
