@@ -23,11 +23,23 @@ Book List | block.super
         <form class="col-12 search-box">
             <input name="q"  placeholder="Search..." type="search" id="search" value="{{q}}">
             <select name="search_by" id="search_by">
-                <option value="all" {% if search_by == 'all' %} selected {% endif %}>All</option>
+                <option value="all" {% if search_by == 'all' %} selected {% endif %}>search by</option>
                 <option value="title" {% if search_by == 'title' %} selected {% endif %}>Title</option>
                 <option value="author" {% if search_by == 'author' %} selected {% endif %}>Author</option>
                 <option value="description" {% if search_by == 'description' %} selected {% endif %}>description</option>
                 <option value="category" {% if search_by == 'category' %} selected {% endif %}>Category</option>
+            </select>
+
+             <select name="order_by" id="order_by">
+                <option value="all" {% if order_by == 'all' %} selected {% endif %}>order by</option>
+                <option value="price_desc" {% if order_by == 'price_desc' %} selected {% endif %}>price desc</option>
+                <option value="price_asc" {% if order_by == 'price_asc' %} selected {% endif %}>price asc</option>
+                <option value="rating_desc" {% if order_by == 'rating_desc' %} selected {% endif %}>rating desc</option>
+                <option value="rating_acs" {% if order_by == 'rating_acs' %} selected {% endif %}>rating acs</option>
+                <option value="views_desc" {% if order_by == 'views_desc' %} selected {% endif %}>views desc</option>
+                <option value="views_asc" {% if order_by == 'views_asc' %} selected {% endif %}>views asc</option>
+                <option value="time_desc" {% if order_by == 'time_desc' %} selected {% endif %}>time_desc</option>
+                <option value="time_acs" {% if order_by == 'time_acs' %} selected {% endif %}>time acs</option>
             </select>
             <button class="btn-1 btn-dark"> search</button>
         </form>

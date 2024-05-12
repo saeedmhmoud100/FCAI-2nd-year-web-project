@@ -497,7 +497,7 @@ header > img {
   justify-content: center;
 }
 .search-box > input {
-  width: 80%;
+  width: 70%;
   padding: 10px;
   border: none;
   border-radius: 5px 0 0 5px;
@@ -505,7 +505,7 @@ header > img {
 }
 @media screen and (max-width: 768px) {
   .search-box > input {
-    width: 70%;
+    width: 60%;
   }
 }
 .search-box > select {

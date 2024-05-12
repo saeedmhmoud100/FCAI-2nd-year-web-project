@@ -21,7 +21,31 @@ class BookListView(ListView):
 
         queryset = self.apply_search(queryset)
         queryset = self.apply_filter(queryset)
+        queryset = self.apply_ordering(queryset)
 
+        return queryset
+
+
+    def apply_ordering(self, queryset):
+        ordering = self.request.GET.get('order_by', '?')
+        if ordering == 'price_desc':
+            queryset = queryset.order_by('-price')
+        elif ordering == 'price_acs':
+            queryset = queryset.order_by('price')
+        elif ordering == 'rating_desc':
+            queryset = queryset.order_by('-rating')
+        elif ordering == 'rating_acs':
+            queryset = queryset.order_by('rating')
+        elif ordering == 'views_desc':
+            queryset = queryset.order_by('-views')
+        elif ordering == 'views_acs':
+            queryset = queryset.order_by('views')
+        elif ordering == 'time_desc':
+            queryset = queryset.order_by('-created_at')
+        elif ordering == 'time_acs':
+            queryset = queryset.order_by('created_at')
+        else:
+            queryset = queryset.order_by('?')
         return queryset
     def apply_search(self, queryset):
         q = self.request.GET.get('q', '')
@@ -64,6 +88,7 @@ class BookListView(ListView):
         context['rating'] = int(self.request.GET.get('rating', 0))
         context['price_from'] = self.request.GET.get('price_from', '')
         context['price_to'] = self.request.GET.get('price_to', '')
+        context['order_by'] = self.request.GET.get('order_by', '')
         return context
 
 
