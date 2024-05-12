@@ -3,7 +3,7 @@ from django.db import models
 from django.db.models.signals import pre_save
 
 from project.db.models import BasicModel
-from project.db.signals import unique_slugify_pre_save
+from ratings.db.signals import slugify_rating_post_save
 
 # Create your models here.
 
@@ -25,4 +25,4 @@ class Rating(BasicModel):
         return f'{self.user} - {self.book} - {self.rating}'
 
 
-pre_save.connect(unique_slugify_pre_save, sender=Rating)
+pre_save.connect(slugify_rating_post_save, sender=Rating)

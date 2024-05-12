@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}Add Rating | {{block.super}}{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+
+{% block content %}
+
+<form class="form" method="post">
+    {% csrf_token %}
+    <div class="input-container">
+        <label for="rating">Add New Review</label>
+        <input type="number" id="rating" name="rating" min="1" max="5" required
+               placeholder="Enter your rating from 1 to 5">
+        <input type="hidden" id="bookSlug" value="{{object.slug}}">
+        <textarea id="review" name="review" placeholder="Write your review here" required></textarea>
+        <button class="btn-6 btn-dark" type="submit">Add</button>
+    </div>
+</form>
+
+{% endblock %}
