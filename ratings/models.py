@@ -13,7 +13,7 @@ User = settings.AUTH_USER_MODEL
 class Rating(BasicModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='ratings')
     book = models.ForeignKey('books.Book', on_delete=models.CASCADE, related_name='ratings')
-    rating = models.DecimalField(max_digits=3, decimal_places=2)
+    rating = models.DecimalField(max_digits=3, decimal_places=1)
     review = models.TextField(blank=True, null=True)
     active = models.BooleanField(default=True)
 

@@ -45,12 +45,41 @@
             {% endif %}
         </div>
     </div>
-    <div class="row">
+    <div class="row border-container">
         <h2>Description: </h2>
         <div id="bookDescription" style="word-break: break-word;">
             {{object.description}}
         </div>
     </div>
+    <div class="row">
+        <div class="col-12">
+
+        <h2 style="text-decoration: underline">Reviews </h2>
+            {% if object.ratings.count > 0 %}
+                <div id="bookReviews" class="border-container">
+                    {% for ratings in object.ratings.all %}
+                        <div class="review " {% if not forloop.last %} style="margin-bottom: 20px" {% endif %}>
+
+                            <div class="border-container">
+                                <div style="border-bottom: 3px solid white">
+                                    <span class="reviewer">({{ratings.user}})</span>
+                                    <span class="review-date">{{ratings.updated_at|date:"Y-m-d"}}</span>
+                                </div>
+                                <span class="review-content">{{ratings.rating}}/5</span>
+
+                                <div class="review-content" style="word-break: break-word;">{{ratings.review}}</div>
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                </div>
+
+            {% else %}
+                <div>No reviews yet</div>
+            {% endif %}
+
+        </div>
+
 
 </div>
 

@@ -26,16 +26,17 @@
     text-align: left;
   }
 }
-.details-container > .row:nth-child(2) {
+
+.border-container {
   border: 6px solid white;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 10px;
 }
-.details-container > .row:nth-child(2) > h2 {
+.border-container > h2 {
   text-decoration: underline;
 }
-.details-container > .row:nth-child(2) > div {
+.border-container > div {
   padding-left: 10px;
 }
 
