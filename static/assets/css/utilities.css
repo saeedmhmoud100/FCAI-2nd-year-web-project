@@ -639,6 +639,7 @@ header > img {
   border-bottom-right-radius: 5px;
   font-size: 1.5rem;
   text-decoration: underline;
+  letter-spacing: 5px;
 }
 .filter-box-parent > .search-box {
   padding: 0 10px;

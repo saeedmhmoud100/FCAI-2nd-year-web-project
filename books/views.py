@@ -17,30 +17,55 @@ class BookListView(ListView):
     context_object_name = 'books'
 
     def get_queryset(self):
+        queryset = self.queryset
+
+        queryset = self.apply_search(queryset)
+        queryset = self.apply_filter(queryset)
+
+        return queryset
+    def apply_search(self, queryset):
         q = self.request.GET.get('q', '')
         search_by = self.request.GET.get('search_by', 'all')
-        queryset = self.queryset
         if not q:
             return queryset
 
         if search_by == 'title':
-            queryset = self.queryset.filter(title__icontains=q)
+            queryset = queryset.filter(title__icontains=q)
         elif search_by == 'author':
-            queryset = self.queryset.filter(author__icontains=q)
+            queryset = queryset.filter(author__icontains=q)
         elif search_by == 'description':
-            queryset = self.queryset.filter(description__icontains=q)
+            queryset = queryset.filter(description__icontains=q)
         elif search_by == 'category':
-            queryset = self.queryset.filter(category__title__icontains=q)
+            queryset = queryset.filter(category__title__icontains=q)
         elif q == 'all':
-            queryset = self.queryset.filter(
+            queryset = queryset.filter(
                 Q(title__icontains=q) | Q(author__icontains=q) | Q(category__title__icontains=q))
         return queryset
+    def apply_filter(self, queryset):
+        available = self.request.GET.get('available', '')
+        rating = self.request.GET.get('rating', '')
+        price_from = self.request.GET.get('price_from', 0)
+        price_to = self.request.GET.get('price_to', 100000000000000000000)
+        if available != '' and available:
+            queryset = queryset.filter(borrower=None)
+        # if rating:
+        #     queryset = queryset.filter(ratings=rating)
+        if price_from < price_to:
+            queryset = queryset.filter(price__range=(price_from, price_to))
+        return queryset
+
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['q'] = self.request.GET.get('q', '')
         context['search_by'] = self.request.GET.get('search_by', 'all')
+        context['available'] = self.request.GET.get('available', '')
+        context['rating'] = int(self.request.GET.get('rating', 0))
+        context['price_from'] = self.request.GET.get('price_from', '')
+        context['price_to'] = self.request.GET.get('price_to', '')
         return context
+
 
 
 class BorrowedBookListView(ListView):

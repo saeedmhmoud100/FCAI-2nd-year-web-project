@@ -43,27 +43,26 @@ Book List | block.super
                             <label for="available">Borrowing state</label>
                             <select name="available" id="available" class="form-control" class="input">
                                 <option value="">All</option>
-                                <option value="True">Available</option>
-                                <option value="False">Borrowed</option>
+                                <option value="True" {% if available %} selected {% endif %} >Available</option>
+                                <option value="False"{% if available %} selected {% endif %} >Borrowed</option>
                             </select>
                         </div>
                         <div class="input-container">
                             <label for="rating">Rating</label>
                             <select name="rating" id="rating" class="form-control" class="input">
-                                <option value="">All</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
+                                <option value="0">All</option>
+                                {% for i in 5|my_range %}
+                                    <option value="{{i}}" {% if rating == i %} selected {% endif %}>{{i}}</option>
+                                {% endfor %}
                             </select>
                         </div>
                         <div class="input-container">
                             <h4>Price</h4>
                             <label for="price_from">From</label>
-                            <input type="number" name="price" id="price_from" class="form-control" placeholder="Price" class="input" min="0">
+                            <input type="number" name="price_from" id="price_from" class="form-control" placeholder="Price" class="input" value="{{price_from}}" min="0">
                             <label for="price_to">to</label>
-                            <input type="number" name="price" id="price_to" class="form-control" placeholder="Price" class="input" min="0">
+                            <input type="number" name="price_to" id="price_to" class="form-control" placeholder="Price" class="input" value="{{price_to}}" min="0">
+                            <button class="btn-6 btn-dark" style="margin-top: 24px">Filter</button>
                         </div>
                 </form>
             </div>
@@ -83,7 +82,7 @@ Book List | block.super
                         <span>author: {{book.author}}</span>
                         <span>category: {{book.category}}</span>
                         <span>available: {{book.is_borrowed|not}}</span>
-
+                        <span>price: {{book.price}}</span>
                         <div class="row w-100">
                             <div class="col-12 text-center">
                                 <button class="btn-6 btn-dark" onclick="urlRedirect(`{% url 'book_details' book.slug %}`)">
