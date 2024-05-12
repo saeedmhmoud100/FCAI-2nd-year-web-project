@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 
 from books.models import Book
 from ratings.forms import RatingForm
@@ -23,4 +23,17 @@ class CreateRatingView(CreateView):
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, 'Rating added successfully')
+        return reverse('book_details', kwargs={'slug': self.kwargs['book_slug']})
+
+
+class UpdateRatingView(UpdateView):
+    model = Rating
+    form_class = RatingForm
+    template_name = 'ratings/update_rating.html'
+
+    def get_object(self, queryset=None):
+        return Rating.objects.get(user=self.request.user, book__slug=self.kwargs['book_slug'],slug=self.kwargs['slug'])
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.SUCCESS, 'Rating updated successfully')
         return reverse('book_details', kwargs={'slug': self.kwargs['book_slug']})
