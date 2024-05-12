@@ -3,7 +3,7 @@
 {% load custom_filters %}
 
 {% block title %}
- Book Details | block.super
+Book Details | block.super
 {% endblock %}
 
 {% block style %}
@@ -22,26 +22,35 @@
         </div>
 
         <div class="col-9 text-data">
-            <div>ID: <span id="bookID"> {{object.id}}</span></div><br/>
-            <div>book Title:  <span id="bookTitle"> {{object.title}}</span></div><br/>
-            <div>author:  <span id="bookAuthor"> {{object.author}}</span></div><br/>
-            <div>category:  <span id="bookCategory"> {{object.category}}</span></div><br/>
-            <div>viewers: <span id="bookViewers">  {{object.views}}</span></div><br/>
-            <div>rating:  <span id="bookRating">  {{object.rating}}{% if object.rating != '~' %}/5{% endif %} </span></div><br/>
-            <div>price per day: <span id="bookPrice">  {{object.price}}$</span></div><br/>
+            <div>ID: <span id="bookID"> {{object.id}}</span></div>
+            <br/>
+            <div>book Title: <span id="bookTitle"> {{object.title}}</span></div>
+            <br/>
+            <div>author: <span id="bookAuthor"> {{object.author}}</span></div>
+            <br/>
+            <div>category: <span id="bookCategory"> {{object.category}}</span></div>
+            <br/>
+            <div>viewers: <span id="bookViewers">  {{object.views}}</span></div>
+            <br/>
+            <div>rating: <span id="bookRating">  {{object.rating}}{% if object.rating != '~' %}/5{% endif %} </span>
+            </div>
+            <br/>
+            <div>price per day: <span id="bookPrice">  {{object.price}}$</span></div>
+            <br/>
             <div class="row" style="display:flex;flex-direction: row;align-items: center">
                 <div class="col-3">available: <span id="bookAvailable">  {{object.is_borrowed|not}}</span></div>
                 <div class="col-9">
                     <img class="love-icon" src="{% static 'assets/icons/heart-solid.svg' %}" alt="">
                 </div>
-            </div><br/>
+            </div>
+            <br/>
 
             {% if object.is_borrowed %}
-                {% if request.user.id == object.borrower.id %}
-                    <button class="btn-2 btn-dark" onclick="urlRedirect('{% url 'return_book' object.slug %}')">Return</button>
-                {% endif %}
+            {% if request.user.id == object.borrower.id %}
+            <button class="btn-2 btn-dark" onclick="urlRedirect('{% url 'return_book' object.slug %}')">Return</button>
+            {% endif %}
             {% else %}
-                <button class="btn-2 btn-dark" onclick="urlRedirect('{% url 'borrow_book' object.slug %}')">Borrow</button>
+            <button class="btn-2 btn-dark" onclick="urlRedirect('{% url 'borrow_book' object.slug %}')">Borrow</button>
             {% endif %}
         </div>
     </div>
@@ -52,38 +61,82 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12">
+        <div class="col-12 border-container">
 
-        <h2 style="text-decoration: underline">Reviews </h2>
-            {% if object.ratings.count > 0 %}
-                <div id="bookReviews" class="border-container">
-                    {% for ratings in object.ratings.all %}
-                        <div class="review " {% if not forloop.last %} style="margin-bottom: 20px" {% endif %}>
 
-                            <div class="border-container">
-                                <div style="border-bottom: 3px solid white">
-                                    <span class="reviewer">({{ratings.user}})</span>
-                                    <span class="review-date">{{ratings.updated_at|date:"Y-m-d"}}</span>
-                                </div>
-                                <span class="review-content">{{ratings.rating}}/5</span>
-
-                                <div class="review-content" style="word-break: break-word;">{{ratings.review}}</div>
-                            </div>
-
-                        </div>
-                    {% endfor %}
+            <h2 style="text-decoration: underline">Reviews </h2>
+            {% if not request.user|is_not_object_owner:object.ratings.all %}
+            <form class="form">
+                <div class="input-container">
+                    <label for="rating">Add New Review</label>
+                    <input type="number" id="rating" name="rating" min="1" max="5" required placeholder="Enter your rating from 1 to 5">
+                    <input type="hidden" id="bookSlug" value="{{object.slug}}">
+                    <textarea id="review" name="review" placeholder="Write your review here" required></textarea>
+                    <button class="btn-6 btn-dark" type="submit">Add</button>
                 </div>
+            </form>
+            <h2>All Reviews</h2>
+            {% endif %}
+
+            {% if object.ratings.count > 0 %}
+            <div id="bookReviews">
+                {% for ratings in object.ratings.all %}
+                {% if ratings.user == request.user %}
+                <div class="review " style="margin-bottom: 20px">
+
+                    <div class="border-container">
+                        <div class="row" style="border-bottom: 3px solid white;padding-bottom: 5px" >
+                            <div class="col-8">
+
+                                <span class="reviewer">({{ratings.user}})</span>
+                                <span class="review-date">{{ratings.updated_at|date:"Y-m-d"}}</span>
+                            </div>
+                            {% if request.user == ratings.user %}
+                            <div class="col-2">
+                                <button class="btn-6 btn-danger" style="margin: 0">Delete</button>
+                            </div>
+                            <div class="col-2">
+                                <button class="btn-6 btn-success" style="margin: 0">Update</button>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <span class="review-content">{{ratings.rating}}/5</span>
+
+                        <div class="review-content" style="word-break: break-word;">{{ratings.review}}</div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+
+
+                {% for ratings in object.ratings.all %}
+                {% if ratings.user != request.user %}
+                    <div class="review " {% if not forloop.last %} style="margin-bottom: 20px" {% endif %}>
+
+                        <div class="border-container">
+                            <div style="border-bottom: 3px solid white">
+                                <span class="reviewer">({{ratings.user}})</span>
+                                <span class="review-date">{{ratings.updated_at|date:"Y-m-d"}}</span>
+                            </div>
+                            <span class="review-content">{{ratings.rating}}/5</span>
+
+                            <div class="review-content" style="word-break: break-word;">{{ratings.review}}</div>
+                        </div>
+                    </div>
+                {% endif %}
+                {% endfor %}
+            </div>
 
             {% else %}
-                <div>No reviews yet</div>
+            <div>No reviews yet</div>
             {% endif %}
 
         </div>
 
 
-</div>
+    </div>
 
 
-{% endblock %}
+    {% endblock %}
 
 

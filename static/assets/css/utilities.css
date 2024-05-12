@@ -487,6 +487,16 @@ header > img {
   color: white;
 }
 
+.btn-success {
+  background-color: #198754;
+  color: white;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
 .search-box {
   width: 100%;
   padding: 10px 0;
