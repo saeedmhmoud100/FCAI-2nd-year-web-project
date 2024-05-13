@@ -25,6 +25,11 @@ class CreateRatingView(CreateView):
         messages.add_message(self.request, messages.SUCCESS, 'Rating added successfully')
         return reverse('book_details', kwargs={'slug': self.kwargs['book_slug']})
 
+    def form_invalid(self, form):
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, f"{field}: {error}")
+        return super().form_invalid(form)
 
 class UpdateRatingView(UpdateView):
     model = Rating
@@ -38,6 +43,11 @@ class UpdateRatingView(UpdateView):
         messages.add_message(self.request, messages.SUCCESS, 'Rating updated successfully')
         return reverse('book_details', kwargs={'slug': self.kwargs['book_slug']})
 
+    def form_invalid(self, form):
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, f"{field}: {error}")
+        return super().form_invalid(form)
 
 class DeleteRatingView(DeleteView):
     model = Rating

@@ -126,7 +126,9 @@ class BookCreateView(CreateView):
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        print(form.errors)
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, f"{field}: {error}")
         return super().form_invalid(form)
     def get_success_url(self):
         book_url = self.object.get_absolute_url()
@@ -150,6 +152,12 @@ class BookUpdateView(UpdateView):
             book.set_image(form.cleaned_data['image'])
         book.save()
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, f"{field}: {error}")
+        return super().form_invalid(form)
 
     def get_success_url(self):
         book_url = self.object.get_absolute_url()
