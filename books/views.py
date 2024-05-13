@@ -125,6 +125,9 @@ class BookCreateView(CreateView):
         book.save()
         return super().form_valid(form)
 
+    def form_invalid(self, form):
+        print(form.errors)
+        return super().form_invalid(form)
     def get_success_url(self):
         book_url = self.object.get_absolute_url()
         success_message = mark_safe(f'Book added successfully <a href="{book_url}">View Book</a>')
