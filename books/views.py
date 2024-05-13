@@ -61,6 +61,8 @@ class BookListView(ListView):
             queryset = queryset.filter(description__icontains=q)
         elif search_by == 'category':
             queryset = queryset.filter(category__title__icontains=q)
+        elif search_by == 'rating':
+            queryset = queryset.filter(ratings__review__icontains=q).distinct()
         elif q == 'all':
             queryset = queryset.filter(
                 Q(title__icontains=q) | Q(author__icontains=q) | Q(category__title__icontains=q))
