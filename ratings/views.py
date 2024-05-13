@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, DeleteView
 
@@ -57,4 +58,14 @@ class DeleteRatingView(DeleteView):
         return Rating.objects.get(user=self.request.user, book__slug=self.kwargs['book_slug'],slug=self.kwargs['slug'])
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, 'Rating deleted successfully')
+        if self.request.GET.get('next'):
+            return self.request.GET.get('next')
         return reverse('book_details', kwargs={'slug': self.kwargs['book_slug']})
+
+
+
+def change_active(request, book_slug, slug ):
+    rating = Rating.objects.get(slug=slug, book__slug=book_slug)
+    print(slug)
+    rating.change_active()
+    return redirect(reverse('dashboard_rating_list'))

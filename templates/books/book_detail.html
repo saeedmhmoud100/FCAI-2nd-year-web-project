@@ -106,7 +106,7 @@ Book Details | block.super
                 {% endfor %}
 
 
-                {% for ratings in object.ratings.all %}
+                {% for ratings in object.ratings.active %}
                 {% if ratings.user != request.user %}
                 <div class="review " {% if not forloop.last %} style="margin-bottom: 20px" {% endif %}>
 

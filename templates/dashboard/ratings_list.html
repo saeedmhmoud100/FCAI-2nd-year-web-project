@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load custom_filters %}
+{% load static %}
+
+
+{% block title %}
+Ratings List | Dashboard
+{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+
+<h2 class="text-center">Admin DashBoard</h2>
+
+
+
+<div class="container">
+
+    {% include 'dashboard/pages.html' %}
+
+<h2 class="text-center">All Categories</h2>
+    <div class="w-100">
+        <table class="w-100">
+            <tr style="font-weight: bold">
+                <td>rating id</td>
+                <td>user id</td>
+                <td>user name</td>
+                <td>book</td>
+                <td>rating</td>
+                <td>review </td>
+                <td>active status </td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            {% for object in object_list %}
+
+            <tr>
+                <td>{{object.id}}</td>
+                <td>{{object.user.id}}</td>
+                <td>{{object.user.username}}</td>
+                <td><a href="{{object.book.get_absolute_url}}"> {{object.book}}</a></td>
+                <td>{{object.rating}}</td>
+                <td>{{object.review|truncatechars:10}}</td>
+                <td>{{object.active}}</td>
+
+                <td><button class="btn-6 btn-danger" onclick="urlRedirect(`{{ object.get_delete_url }}?next={{request.path}}`)"> Delete</button></td>
+                <td><button class="btn-6 btn-dark" onclick="urlRedirect(`{{ object.get_check_active_url }}`)"> {% if object.active %} Deactivate {% else %} Activate {% endif %}</button></td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+</div>
+
+
+</div>
+
+
+{% endblock %}
+{% block script %}
+
+<!--<script type="module" src="{% static 'assets/js/book_list_user.js' %}"></script>-->
+
+{% endblock %}
