@@ -29,5 +29,6 @@ urlpatterns = [
     path("books/", include("books.urls")),
     path("books/<slug:book_slug>/rating/", include("ratings.urls")),
     path("categories/", include("categories.urls")),
+    path("wishlist/", include("wishlist.urls")),
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

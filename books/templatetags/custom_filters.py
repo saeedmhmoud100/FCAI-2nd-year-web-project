@@ -1,5 +1,7 @@
 from django import template
 
+from wishlist.models import UserWishList
+
 register = template.Library()
 
 
@@ -19,3 +21,8 @@ def is_not_object_owner(request_user, object_list):
         if obj.user == request_user:
             return True
     return False
+
+
+@register.filter(name='in_wishlist')
+def in_wishlist(book, user):
+    return UserWishList.objects.filter(book=book, user=user).exists()

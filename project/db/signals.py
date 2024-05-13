@@ -14,3 +14,4 @@ def slugify_book_image_post_save(sender, instance, *args, **kwargs):
     if instance.slug is None:
         instance.slug = slugify(instance.book.title + '-image')
         instance.save()
+
