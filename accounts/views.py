@@ -119,3 +119,23 @@ class UserProfileView(View):
     def get(self, request):
         user = request.user
         return render(request, 'accounts/user_profile.html', {'user': user})
+
+    def post(self, request):
+        user = request.user
+        current_password = request.POST.get('current_password')
+        new_password = request.POST.get('new_password')
+        re_password = request.POST.get('re_password')
+        if not current_password or not new_password or not re_password:
+            messages.add_message(request, messages.ERROR, 'All fields are required')
+        else:
+            if user.check_password(current_password):
+                if new_password == re_password:
+                    user.set_password(new_password)
+                    user.save()
+                    messages.add_message(request, messages.SUCCESS, 'Password changed successfully')
+                else:
+                    messages.add_message(request, messages.ERROR, 'Passwords do not match')
+            else:
+                messages.add_message(request, messages.ERROR, 'Invalid current password')
+
+        return redirect('profile')

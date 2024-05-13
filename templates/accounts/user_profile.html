@@ -51,7 +51,10 @@ Profile | block.super
                       </span>
                 </div>
                 <div class="col-12">
-                    <button class="btn-6 btn-danger" onclick="urlRedirect(`{% url 'delete_user' request.user.id %}`)">Delete Account</button>
+                    {% if request.user.is_authenticated %}
+                        <button class="btn-6 btn-danger" onclick="urlRedirect(`{% url 'delete_user' request.user.id %}`)">Delete Account</button>
+                    {% endif %}
+
                 </div>
             </div>
         </div>
@@ -65,8 +68,8 @@ Profile | block.super
                         {% csrf_token %}
                         <div class="input-container">
                             <label for="old_password">Old Password</label>
-                            <input type="password" name="old_password" id="old_password"
-                                   placeholder="Enter your old password">
+                            <input type="password" name="current_password" id="old_password"
+                                   placeholder="Enter your current password">
                         </div>
                         <div class="input-container">
                             <label for="new_password">New Password</label>
@@ -75,7 +78,7 @@ Profile | block.super
                         </div>
                         <div class="input-container">
                             <label for="confirm_password">Confirm Password</label>
-                            <input type="password" name="confirm_password" id="confirm_password"
+                            <input type="password" name="re_password" id="confirm_password"
                                    placeholder="Confirm your new password">
                         </div>
                         <input type="submit" name="Submit" value="Submit" id="signup-button" class="btn-6 btn-dark">
