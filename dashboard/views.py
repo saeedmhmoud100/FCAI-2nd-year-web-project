@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.views.generic import ListView
 
 from books.models import Book
@@ -7,6 +8,8 @@ from ratings.models import Rating
 
 
 # Create your views here.
+
+User = get_user_model()
 
 class AdminBookListView(BookListView):
     model = Book
@@ -25,3 +28,11 @@ class AdminRatingListView(ListView):
 
     def get_queryset(self):
         return Rating.objects.all().order_by('id')
+
+
+class AdminUserListView(ListView):
+    model = User
+    template_name = 'dashboard/users_list.html'
+
+    def get_queryset(self):
+        return User.objects.all().order_by('id')

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Add User | {{ block.super }}
+{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+<form method="POST" class="form">
+    {% csrf_token %}
+    <div class="input-container">
+        <label for="{{ form.username.id_for_label }}">Username</label>
+        {{ form.username }}
+    </div>
+    <div class="input-container">
+        <label for="{{ form.email.id_for_label }}">Email</label>
+        {{ form.email }}
+    </div>
+    <div class="input-container">
+        <label for="{{ form.password.id_for_label }}">Password</label>
+        {{ form.password }}
+    </div>
+    <div class="input-container">
+        <div class="text-center"style="flex-direction: row-reverse;display: flex;width: 10%;margin: auto;">
+            <input type="radio" value="False" name="is_admin" id="radio1" placeholder="example@gmail.com" checked> <label for='radio1'>user</label>
+            <input type="radio" value="True" name="is_admin" id="radio2" placeholder="example@gmail.com" > <label for="radio2">admin</label>
+        </div>
+    </div>
+
+    <input type="submit" name="Submit" value="Submit" id="signup-button" class="btn-6 btn-dark">
+</form>
+
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'js/sign_up.js' %}"></script>
+{% endblock %}

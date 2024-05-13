@@ -1,0 +1,23 @@
+
+{% extends "base.html" %}
+
+{% block title %}Delete User{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+
+{% block content %}
+ <div class="container">
+        <div class="row flex-center">
+            <h1>Are you sure you want to delete This User: <span id="BookName">{{object.username}}</span></h1>
+        </div>
+        <div class="row flex-center">
+            <form method="post" class="col-6 no-wrap gap">
+                {% csrf_token %}
+                <button type="submit" class="btn-3 btn-dark" id="delete_book_button">delete</button>
+                <button type="button" class="btn-3 btn-dark" onclick="urlRedirect('{% url 'dashboard_user_list'  %}')">Cancel</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

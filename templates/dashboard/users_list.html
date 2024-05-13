@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load custom_filters %}
+{% load static %}
+
+
+{% block title %}
+Users List | Dashboard
+{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+
+<h2 class="text-center">Admin DashBoard</h2>
+
+
+
+<div class="container">
+
+    {% include 'dashboard/pages.html' %}
+
+    <div class="w-100">
+        <button class="btn-6 btn-dark" onclick="urlRedirect('{% url 'add_user' %}')">Add User</button>
+    </div>
+    <hr/>
+
+<h2 class="text-center">All Users</h2>
+    <div class="w-100">
+        <table class="w-100">
+            <tr style="font-weight: bold">
+                <td>id</td>
+                <td>username</td>
+                <td>is admin</td>
+                <td>active status</td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            {% for object in object_list %}
+
+            <tr>
+                <td>{{object.id}}</td>
+                <td>{{object.username}}</td>
+                <td>{{object.is_superuser}}</td>
+                <td>{{object.is_active}}</td>
+
+                <td><button class="btn-6 btn-dark" onclick="urlRedirect(`{% url 'change_active_status' object.id %}`)"> {% if object.is_active %} Deactivate {% else %} Activate {% endif %}</button></td>
+                <td><button class="btn-6 btn-dark" onclick="urlRedirect(`{% url 'change_user_rule' object.id %}`)"> {% if not object.is_superuser %} Make admin {% else %} make not admin {% endif %}</button></td>
+                <td><button class="btn-6 btn-danger" onclick="urlRedirect(`{% url 'delete_user' object.id %}?next={{request.path}}`)"> Delete</button></td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+</div>
+
+
+</div>
+
+
+{% endblock %}
+{% block script %}
+
+<!--<script type="module" src="{% static 'assets/js/book_list_user.js' %}"></script>-->
+
+{% endblock %}
