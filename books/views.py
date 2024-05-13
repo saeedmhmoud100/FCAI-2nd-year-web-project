@@ -63,9 +63,10 @@ class BookListView(ListView):
             queryset = queryset.filter(category__title__icontains=q)
         elif search_by == 'rating':
             queryset = queryset.filter(ratings__review__icontains=q).distinct()
-        elif q == 'all':
+        elif search_by == 'all':
             queryset = queryset.filter(
-                Q(title__icontains=q) | Q(author__icontains=q) | Q(category__title__icontains=q))
+                Q(title__icontains=q) | Q(author__icontains=q) | Q(category__title__icontains=q) | Q(
+                    description__icontains=q) | Q(ratings__review__icontains=q)).distinct()
         return queryset
     def apply_filter(self, queryset):
         available = self.request.GET.get('available', '')
