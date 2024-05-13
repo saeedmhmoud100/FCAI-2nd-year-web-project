@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Update Data | {{block.super}} {% endblock %}
+{% block content %}
+
+
+<form class="form" method="post">
+    {% csrf_token %}
+    <div class="input-container">
+        <label for="bookCategory">Username:</label>
+        {{form.username}}
+    </div>
+    <div class="input-container">
+        <label for="bookStatus">Email:</label>
+        {{form.email}}
+    </div>
+    <input type="submit" value="Update" id="update-book-button" class="btn-6 btn-dark">
+
+
+</form>
+
+
+{% endblock %}
+

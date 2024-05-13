@@ -19,4 +19,11 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ['username', 'email', 'is_admin', 'password']
 
+class UserUpdateForm(forms.ModelForm):
+    username = forms.CharField(max_length=150, widget=forms.TextInput(attrs={'placeholder': 'Enter your username'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Enter your email'}))
+
+    class Meta:
+        model = User
+        fields = ['username', 'email']
 

@@ -52,9 +52,13 @@ Profile | block.super
                 </div>
                 <div class="col-12">
                     {% if request.user.is_authenticated %}
+                        <button class="btn-6 btn-success" onclick="urlRedirect(`{% url 'update_user' request.user.id %}`)">Update Data</button>
+                    {% endif %}
+                </div>
+                <div class="col-12">
+                    {% if request.user.is_authenticated %}
                         <button class="btn-6 btn-danger" onclick="urlRedirect(`{% url 'delete_user' request.user.id %}`)">Delete Account</button>
                     {% endif %}
-
                 </div>
             </div>
         </div>

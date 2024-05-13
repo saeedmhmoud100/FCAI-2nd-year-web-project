@@ -12,5 +12,6 @@ urlpatterns = [
     path('change_active_status/<int:user_id>/', views.change_active_status, name='change_active_status'),
     path('change_user_rule/<int:user_id>/', views.change_user_rule, name='change_user_rule'),
     path('delete_user/<int:user_id>/', views.delete_user, name='delete_user'),
+    path('update_user/<int:pk>/', views.UpdateUserView.as_view(), name='update_user'),
 
 ]

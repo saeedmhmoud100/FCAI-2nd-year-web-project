@@ -4,9 +4,9 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.urls import reverse
 from django.views import View
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 
-from accounts.forms import SignUpForm, UserForm
+from accounts.forms import SignUpForm, UserForm, UserUpdateForm
 
 # Create your views here.
 
@@ -21,7 +21,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('home')
+            return redirect('profile')
         else:
             messages.add_message(request, messages.ERROR, 'Invalid username or password')
             return render(request, 'accounts/login.html')
@@ -77,6 +77,7 @@ def change_active_status(request, user_id):
     user.save()
     return redirect('dashboard_user_list')
 
+
 def delete_user(request, user_id):
     if request.method == 'POST':
         user = User.objects.get(id=user_id)
@@ -84,7 +85,8 @@ def delete_user(request, user_id):
         if request.GET.get('next'):
             return redirect(request.GET.get('next'))
         return redirect('profile')
-    return render(request, 'accounts/delete_user.html',{'object': User.objects.get(id=user_id)})
+    return render(request, 'accounts/delete_user.html', {'object': User.objects.get(id=user_id)})
+
 
 def change_user_rule(request, user_id):
     user = User.objects.get(id=user_id)
@@ -104,7 +106,7 @@ class CreateUserView(CreateView):
     template_name = 'accounts/add_user.html'
 
     def form_valid(self, form):
-        user= super().form_valid(form)
+        user = super().form_valid(form)
         if form.cleaned_data.get('is_admin'):
             self.object.is_staff = True
             self.object.is_superuser = True
@@ -139,3 +141,18 @@ class UserProfileView(View):
                 messages.add_message(request, messages.ERROR, 'Invalid current password')
 
         return redirect('profile')
+
+
+class UpdateUserView(UpdateView):
+    model = User
+    form_class = UserUpdateForm
+    template_name = 'accounts/update_user.html'
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.SUCCESS, 'Data updated successfully')
+        return reverse('profile')
+
+    def form_invalid(self, form):
+        for field in form.errors:
+            messages.add_message(self.request, messages.ERROR, f'{field}: {form.errors[field][0]}')
+        return super().form_invalid(form)
