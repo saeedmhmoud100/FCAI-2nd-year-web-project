@@ -139,7 +139,7 @@ class BookUpdateView(UpdateView):
     template_name = 'books/update_book.html'
 
     def get_queryset(self):
-        return Book.objects.active().filter(slug=self.kwargs['slug'])
+        return Book.objects.all().filter(slug=self.kwargs['slug'])
 
     def form_valid(self, form):
         book = form.save()
@@ -157,7 +157,7 @@ class BookUpdateView(UpdateView):
 
 
 def delete_book(request, slug):
-    book = Book.objects.active().get(slug=slug)
+    book = Book.objects.all().get(slug=slug)
     print(book, slug)
     if request.method == 'POST':
         book.delete()

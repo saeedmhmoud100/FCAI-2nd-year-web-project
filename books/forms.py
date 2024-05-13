@@ -21,6 +21,7 @@ class UpdateBookForm(forms.ModelForm):
     price = forms.DecimalField(max_digits=10, decimal_places=2, required=True,widget=forms.NumberInput(attrs={'placeholder': 'Enter the book price'}))
     description = forms.CharField(max_length=500, required=True,widget=forms.Textarea(attrs={'placeholder': 'Enter the book description'}))
     image = forms.FileField(required=False,widget=forms.FileInput(attrs={'placeholder': 'Upload the book image'}))
+    active = forms.BooleanField(required=False)
     class Meta:
         model = Book
-        fields = ('title', 'author', 'price', 'category', 'description', 'image','borrower')
+        fields = ('title', 'author', 'price', 'category', 'description', 'image','borrower','active')

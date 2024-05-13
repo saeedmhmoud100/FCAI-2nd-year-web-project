@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load custom_filters %}
+{% load static %}
+
+
+{% block title %}
+Book List | Dashboard
+{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+
+<h2 class="text-center">Admin Book List</h2>
+
+
+
+<div class="container">
+
+    <div class="w-100">
+        <table class="w-100">
+            <tr style="font-weight: bold">
+                <td>id</td>
+                <td>title</td>
+                <td>author</td>
+                <td>category</td>
+                <td>borrower</td>
+                <td>price</td>
+                <td>active</td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            {% for book in books %}
+
+            <tr>
+                <td>{{book.id}}</td>
+                <td>{{book.title}}</td>
+                <td>{{book.author}}</td>
+                <td>{{book.category}}</td>
+                <td>{{book.borrower}}</td>
+                <td>{{book.price}}</td>
+                <td>{{book.active}}</td>
+                <td><button class="btn-6 btn-success" onclick="urlRedirect(`{{ book.get_update_url }}`)">Update</button></td>
+                <td><button class="btn-6 btn-danger" onclick="urlRedirect(`{{ book.get_delete_url }}`)"> Delete</button></td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+</div>
+
+
+</div>
+
+
+{% endblock %}
+{% block script %}
+
+<!--<script type="module" src="{% static 'assets/js/book_list_user.js' %}"></script>-->
+
+{% endblock %}
