@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+
+{% block title %}Category Delete | {{block.super}}{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+
+{% block content %}
+  <div class="container">
+
+    <h1>Are you sure you want to delete this category: {{object.title}}</h1>
+    <form method="post" class="row flex-center">
+        {% csrf_token %}
+        <div class="col-3"><button type="submit" class="btn-6 btn-dark">Delete</button></div>
+        <div class="col-3"><button type="button" class="btn-6 btn-dark">Cancel</button></div>
+
+    </form>
+  </div>
+{% endblock %}

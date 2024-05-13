@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+
+{% block title %}{{ title }} | {{block.super}}{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+
+{% block content %}
+  <div class="container">
+
+    <h1>{{ title }}</h1>
+    <form method="post" class="form">
+      <div class="input-container">
+
+        {{ form }}
+        {% csrf_token %}
+        <button type="submit" class="btn-6 btn-dark">Save</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}

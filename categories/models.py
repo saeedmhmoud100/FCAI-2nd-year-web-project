@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import pre_save
 
@@ -9,7 +10,7 @@ from project.db.signals import unique_slugify_pre_save
 
 class Category(BasicModel):
     title = models.CharField(max_length=100)
-
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='categories',null=True, blank=True)
     class Meta:
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
