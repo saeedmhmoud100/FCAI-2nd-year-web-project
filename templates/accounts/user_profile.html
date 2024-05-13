@@ -94,27 +94,35 @@ Profile | block.super
         <h2 class="text-left">Your favorite books</h2>
     </div>
     <div class="row" id="borrowed_book_list">
-        {% if object_list|length == 0 %}
+        {% if request.user.wishlist.count == 0 %}
             <div class="col-12">
                 <h2 class="text-center">No books in favorite yet</h2>
             </div>
         {% else %}
-            {% for book in object_list %}
+            {% for item in request.user.wishlist.all %}
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="card">
-                    <img src={{book.image.url}} alt="book image">
+                    <img src={{item.book.image.url}} alt="book image">
                     <div class="card-body">
-                        <span class="id" style="display: none;">{{book.id}}</span>
-                        <h2 class="card-title">{{book.title}}</h2>
-                        <span>author: {{book.author}}</span>
-                        <span>category: {{book.category}}</span>
+                        <span class="id" style="display: none;">{{item.book.id}}</span>
+                        <div style="display: flex;justify-content: space-between;align-items: center;width: 93%">
+                            <h2 class="card-title">{{item.book.title}}</h2>
+                            {% if request.user.is_authenticated %}
+                                {% if item.book|in_wishlist:request.user.id %}
+                                <img class="love-icon" src="{% static 'assets/icons/heart-solid.svg' %}" onclick="urlRedirect(`{% url 'toggle_book_in_wishlist' item.book.id %}`)" alt="">
+                                {% else %}
+                                <img class="love-icon" src="{% static 'assets/icons/heart-regular.svg' %}" onclick="urlRedirect(`{% url 'toggle_book_in_wishlist' item.book.id %}`)" alt="">
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        <span>author: {{item.book.author}}</span>
+                        <span>category: {{item.book.category}}</span>
 
                         <div class="row w-100">
                             <div class="col-12 text-center">
-                                <button class="btn-6 btn-dark" onclick="urlRedirect(`{% url 'book_details' book.slug %}`)">
+                                <button class="btn-6 btn-dark" onclick="urlRedirect(`{% url 'book_details' item.book.slug %}`)">
                                     details
                                 </button>
-                                <button class="btn-6 btn-dark" onclick="urlRedirect('{% url 'return_book' book.slug %}')">Return</button>
                             </div>
                         </div>
                     </div>

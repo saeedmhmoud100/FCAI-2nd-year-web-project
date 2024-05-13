@@ -40,10 +40,12 @@ Book Details | block.super
             <div class="row" style="display:flex;flex-direction: row;align-items: center">
                 <div class="col-3">available: <span id="bookAvailable">  {{object.is_borrowed|not}}</span></div>
                 <div class="col-9">
-                    {% if object|in_wishlist:request.user %}
-                    <img class="love-icon" src="{% static 'assets/icons/heart-regular.svg' %}" onclick="urlRedirect(`{% url 'toggle_book_in_wishlist' object.id %}`)" alt="">
-                    {% else %}
-                    <img class="love-icon" src="{% static 'assets/icons/heart-solid.svg' %}" onclick="urlRedirect(`{% url 'toggle_book_in_wishlist' object.id %}`)" alt="">
+                    {% if request.user.is_authenticated %}
+                        {% if object|in_wishlist:request.user.id %}
+                        <img class="love-icon" src="{% static 'assets/icons/heart-solid.svg' %}" onclick="urlRedirect(`{% url 'toggle_book_in_wishlist' object.id %}`)" alt="">
+                        {% else %}
+                        <img class="love-icon" src="{% static 'assets/icons/heart-regular.svg' %}" onclick="urlRedirect(`{% url 'toggle_book_in_wishlist' object.id %}`)" alt="">
+                        {% endif %}
                     {% endif %}
                 </div>
             </div>
