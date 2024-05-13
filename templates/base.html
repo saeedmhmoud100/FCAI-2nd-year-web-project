@@ -32,10 +32,10 @@
                 <li><a href="{% url 'signup' %}">sign up</a></li>
                 <li><a href="{% url 'login' %}">login</a></li>
             {% else %}
-
                 {% if user.is_superuser %}
                     <li><a href="{% url 'dashboard_book_list' %}">dashboard</a></li>
                 {% endif %}
+                <li><a href="{% url 'profile' %}">profile</a></li>
                 <li><a href="{% url 'logout' %}">logout</a></li>
             {% endif %}
 

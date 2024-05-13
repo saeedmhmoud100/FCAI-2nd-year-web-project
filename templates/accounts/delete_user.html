@@ -16,7 +16,7 @@
             <form method="post" class="col-6 no-wrap gap">
                 {% csrf_token %}
                 <button type="submit" class="btn-3 btn-dark" id="delete_book_button">delete</button>
-                <button type="button" class="btn-3 btn-dark" onclick="urlRedirect('{% url 'dashboard_user_list'  %}')">Cancel</button>
+                <button type="button" class="btn-3 btn-dark" onclick="urlRedirect('{% url 'home'  %}')">Cancel</button>
             </form>
         </div>
     </div>

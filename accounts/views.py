@@ -3,6 +3,7 @@ from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.urls import reverse
+from django.views import View
 from django.views.generic import CreateView
 
 from accounts.forms import SignUpForm, UserForm
@@ -82,8 +83,8 @@ def delete_user(request, user_id):
         user.delete()
         if request.GET.get('next'):
             return redirect(request.GET.get('next'))
-        return redirect('dashboard_user_list')
-    return render(request, 'accounts/delete_user.html')
+        return redirect('profile')
+    return render(request, 'accounts/delete_user.html',{'object': User.objects.get(id=user_id)})
 
 def change_user_rule(request, user_id):
     user = User.objects.get(id=user_id)
@@ -113,3 +114,8 @@ class CreateUserView(CreateView):
     def get_success_url(self):
         return reverse('dashboard_user_list')
 
+
+class UserProfileView(View):
+    def get(self, request):
+        user = request.user
+        return render(request, 'accounts/user_profile.html', {'user': user})
