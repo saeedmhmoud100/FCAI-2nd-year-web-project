@@ -1,4 +1,6 @@
 from django.contrib.auth import login, authenticate, get_user_model, logout
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -7,12 +9,15 @@ from django.views import View
 from django.views.generic import CreateView, UpdateView
 
 from accounts.forms import SignUpForm, UserForm, UserUpdateForm
+from project.permissions import is_not_authenticated, check_authenticated, check_user, is_admin
 
 # Create your views here.
 
 User = get_user_model()
+not_auth_required = user_passes_test(is_not_authenticated, login_url='profile')
+is_admin_required = user_passes_test(is_admin, login_url='profile')
 
-
+@not_auth_required
 def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -29,6 +34,7 @@ def login_view(request):
     return render(request, 'accounts/login.html')
 
 
+@not_auth_required
 def signup_view(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -62,12 +68,15 @@ def signup_view(request):
     return render(request, 'accounts/sign_up.html', {'form': form})
 
 
+@check_authenticated(check_user)
 def logout_view(request):
     if request.user.is_authenticated:
         logout(request)
     return redirect('home')
 
 
+@is_admin_required
+@check_authenticated(check_user)
 def change_active_status(request, user_id):
     user = User.objects.get(id=user_id)
     if user.is_active:
@@ -78,6 +87,7 @@ def change_active_status(request, user_id):
     return redirect('dashboard_user_list')
 
 
+@check_authenticated(check_user)
 def delete_user(request, user_id):
     if request.method == 'POST':
         user = User.objects.get(id=user_id)
@@ -88,6 +98,8 @@ def delete_user(request, user_id):
     return render(request, 'accounts/delete_user.html', {'object': User.objects.get(id=user_id)})
 
 
+@is_admin_required
+@check_authenticated(check_user)
 def change_user_rule(request, user_id):
     user = User.objects.get(id=user_id)
     if user.is_staff and user.is_superuser:
@@ -100,10 +112,13 @@ def change_user_rule(request, user_id):
     return redirect('dashboard_user_list')
 
 
-class CreateUserView(CreateView):
+class CreateUserView(UserPassesTestMixin, CreateView):
     model = User
     form_class = UserForm
     template_name = 'accounts/add_user.html'
+
+    def test_func(self):
+        return self.request.user.is_superuser
 
     def form_valid(self, form):
         user = super().form_valid(form)
@@ -117,10 +132,13 @@ class CreateUserView(CreateView):
         return reverse('dashboard_user_list')
 
 
-class UserProfileView(View):
+class UserProfileView(UserPassesTestMixin,View):
     def get(self, request):
         user = request.user
         return render(request, 'accounts/user_profile.html', {'user': user})
+
+    def test_func(self):
+        return self.request.user.is_authenticated
 
     def post(self, request):
         user = request.user
@@ -143,11 +161,13 @@ class UserProfileView(View):
         return redirect('profile')
 
 
-class UpdateUserView(UpdateView):
+class UpdateUserView(UserPassesTestMixin,UpdateView):
     model = User
     form_class = UserUpdateForm
     template_name = 'accounts/update_user.html'
 
+    def test_func(self):
+        return self.request.user.pk == self.kwargs.get('pk')
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, 'Data updated successfully')
         return reverse('profile')

@@ -22,3 +22,10 @@ def check_authenticated(test_func, login_url=None, redirect_field_name=REDIRECT_
             return view_func(request, *args, **kwargs)
         return _wrapped_view
     return decorator
+
+
+
+def is_not_authenticated(user):
+    return user.is_anonymous
+def is_admin(user):
+    return user.is_superuser
