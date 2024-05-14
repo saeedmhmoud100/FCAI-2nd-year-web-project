@@ -138,6 +138,8 @@ class UserProfileView(UserPassesTestMixin,View):
         return render(request, 'accounts/user_profile.html', {'user': user})
 
     def test_func(self):
+        if not self.request.user.is_authenticated:
+            messages.add_message(self.request, messages.ERROR, 'You need to login to view this page')
         return self.request.user.is_authenticated
 
     def post(self, request):
