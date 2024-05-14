@@ -76,7 +76,7 @@ class BookListView(ListView):
         if available != '' and available:
             queryset = queryset.filter(borrower=None)
         if rating != '' and int(rating) > 0:
-            queryset = queryset.annotate(avg_rating=Avg('ratings__rating')).filter(avg_rating=rating)
+            queryset = queryset.annotate(avg_rating=Avg('ratings__rating')).filter(avg_rating__gte=rating)
         if price_from < price_to:
             queryset = queryset.filter(price__range=(price_from, price_to))
         return queryset

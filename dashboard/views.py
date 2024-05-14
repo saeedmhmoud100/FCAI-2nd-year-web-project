@@ -11,7 +11,7 @@ from ratings.models import Rating
 
 User = get_user_model()
 
-class AdminBookListView(BookListView):
+class AdminBookListView(ListView):
     model = Book
     template_name = 'dashboard/book_list.html'
 

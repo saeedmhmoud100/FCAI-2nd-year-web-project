@@ -35,12 +35,14 @@ Book List | Dashboard
                 <td>category</td>
                 <td>borrower</td>
                 <td>price</td>
+                <td>Reviews count</td>
+                <td>avg rating</td>
                 <td>active</td>
                 <td></td>
                 <td></td>
             </tr>
 
-            {% for book in books %}
+            {% for book in object_list %}
 
             <tr>
                 <td>{{book.id}}</td>
@@ -49,6 +51,8 @@ Book List | Dashboard
                 <td>{{book.category}}</td>
                 <td>{{book.borrower}}</td>
                 <td>{{book.price}}</td>
+                <td>{{book.ratings.count}}</td>
+                <td>{{book.rating}}</td>
                 <td>{{book.active}}</td>
                 <td><button class="btn-6 btn-success" onclick="urlRedirect(`{{ book.get_update_url }}`)">Update</button></td>
                 <td><button class="btn-6 btn-danger" onclick="urlRedirect(`{{ book.get_delete_url }}`)"> Delete</button></td>

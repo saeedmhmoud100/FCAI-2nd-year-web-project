@@ -61,7 +61,7 @@ Book List | block.super
                             </select>
                         </div>
                         <div class="input-container">
-                            <label for="rating">Rating</label>
+                            <label for="rating">Rating from</label>
                             <select name="rating" id="rating" class="form-control" class="input">
                                 <option value="0">All</option>
                                 {% for i in 5|my_range %}
@@ -95,6 +95,7 @@ Book List | block.super
                         <span>author: {{book.author}}</span>
                         <span>category: {{book.category}}</span>
                         <span>available: {{book.is_borrowed|not}}</span>
+                        <span>rating: {{book.rating}}</span>
                         <span>price: {{book.price}}</span>
                         <div class="row w-100">
                             <div class="col-12 text-center">
