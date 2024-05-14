@@ -71,12 +71,14 @@ Book Details | block.super
 
             <div class="row" style="justify-content: space-between">
                 <div class="col-3">
-                    <h2 style="text-decoration: underline">Reviews </h2>
+                    <h2 style="text-decoration: underline">Reviews ({{object.ratings.count}}) </h2>
                 </div>
-                {% if not request.user|is_not_object_owner:object.ratings.all %}
-                <div class="col-3 text-right">
-                    <button class="btn-dark btn-3" onclick="urlRedirect(`{% url 'add_rating' object.slug %}`)">Add review</button>
-                </div>
+                {% if request.user.is_authenticated %}
+                    {% if not request.user|is_not_object_owner:object.ratings.all %}
+                    <div class="col-3 text-right">
+                        <button class="btn-dark btn-3" onclick="urlRedirect(`{% url 'add_rating' object.slug %}`)">Add review</button>
+                    </div>
+                    {% endif %}
                 {% endif %}
             </div>
 
