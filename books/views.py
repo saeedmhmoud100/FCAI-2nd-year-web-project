@@ -11,16 +11,13 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from books.forms import CreateBookForm, UpdateBookForm
 from books.models import Book
-from django.db.models import CharField
-from project.permissions import check_authenticated, check_user
+from categories.models import Category
 
 
 # Create your views here.
 
 class BookListViewAPI(ListView):
     queryset = Book.objects.active()
-    context_object_name = 'books'
-
     def get_queryset(self):
         queryset = self.queryset
 
@@ -79,6 +76,7 @@ class BookListViewAPI(ListView):
         rating = self.request.GET.get('rating', '')
         price_from = self.request.GET.get('price_from', 0)
         price_to = self.request.GET.get('price_to', 100000000000000000000)
+        category = self.request.GET.get('category', '')
         if price_to == '':
             price_to = 100000000000000000000
         else:
@@ -91,18 +89,9 @@ class BookListViewAPI(ListView):
             queryset = queryset.annotate(avg_rating=Avg('ratings__rating')).filter(avg_rating__gte=rating)
         if price_from <= price_to:
             queryset = queryset.filter(price__range=(price_from, price_to))
+        if category != 'all' and category != '':
+            queryset = queryset.filter(category__title__iexact=category)
         return queryset
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['q'] = self.request.GET.get('q', '')
-        context['search_by'] = self.request.GET.get('search_by', 'all')
-        context['available'] = self.request.GET.get('available', '')
-        context['rating'] = int(self.request.GET.get('rating', 0))
-        context['price_from'] = self.request.GET.get('price_from', '')
-        context['price_to'] = self.request.GET.get('price_to', '')
-        context['order_by'] = self.request.GET.get('order_by', '')
-        return context
 
     def get(self,request,*args,**kwargs):
         queryset = self.get_queryset()
@@ -129,6 +118,12 @@ class BookListViewAPI(ListView):
         return JsonResponse(book_list, safe=False)
 class BookListView(ListView):
     queryset = Book.objects.active()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = self.queryset.values('category__title').distinct()
+        # context['categories'] = Category.objects.all()
+        return context
 
 
 class BorrowedBookListView(UserPassesTestMixin, ListView):

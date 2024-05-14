@@ -21,26 +21,26 @@ Book List | block.super
 
     <div class="row">
         <form class="col-12 search-box click_submit_action">
-            <input name="q"  placeholder="Search..." type="search" id="search" value="{{q}}">
+            <input name="q"  placeholder="Search..." type="search" id="search">
             <select name="search_by" id="search_by">
-                <option value="all" {% if search_by == 'all' %} selected {% endif %}>search by</option>
-                <option value="title" {% if search_by == 'title' %} selected {% endif %}>Title</option>
-                <option value="author" {% if search_by == 'author' %} selected {% endif %}>Author</option>
-                <option value="description" {% if search_by == 'description' %} selected {% endif %}>description</option>
-                <option value="category" {% if search_by == 'category' %} selected {% endif %}>Category</option>
-                <option value="rating" {% if search_by == 'rating' %} selected {% endif %}>Reviews</option>
+                <option value="all">search by</option>
+                <option value="title">Title</option>
+                <option value="author">Author</option>
+                <option value="description">description</option>
+                <option value="category">Category</option>
+                <option value="rating">Reviews</option>
             </select>
 
              <select name="order_by" id="order_by">
-                <option value="all" {% if order_by == 'all' %} selected {% endif %}>order by</option>
-                <option value="price_desc" {% if order_by == 'price_desc' %} selected {% endif %}>price desc</option>
-                <option value="price_asc" {% if order_by == 'price_asc' %} selected {% endif %}>price asc</option>
-                <option value="rating_desc" {% if order_by == 'rating_desc' %} selected {% endif %}>rating desc</option>
-                <option value="rating_acs" {% if order_by == 'rating_acs' %} selected {% endif %}>rating acs</option>
-                <option value="views_desc" {% if order_by == 'views_desc' %} selected {% endif %}>views desc</option>
-                <option value="views_asc" {% if order_by == 'views_asc' %} selected {% endif %}>views asc</option>
-                <option value="time_desc" {% if order_by == 'time_desc' %} selected {% endif %}>time desc</option>
-                <option value="time_acs" {% if order_by == 'time_acs' %} selected {% endif %}>time acs</option>
+                <option value="all">order by</option>
+                <option value="price_desc">price desc</option>
+                <option value="price_asc">price asc</option>
+                <option value="rating_desc">rating desc</option>
+                <option value="rating_acs">rating acs</option>
+                <option value="views_desc">views desc</option>
+                <option value="views_asc">views asc</option>
+                <option value="time_desc">time desc</option>
+                <option value="time_acs" >time acs</option>
             </select>
             <button class="btn-1 btn-dark"> search</button>
         </form>
@@ -56,8 +56,8 @@ Book List | block.super
                             <label for="available">Borrowing state</label>
                             <select name="available" id="available" class="form-control" class="input">
                                 <option value="">All</option>
-                                <option value="True" {% if available %} selected {% endif %} >Available</option>
-                                <option value="False"{% if available %} selected {% endif %} >Borrowed</option>
+                                <option value="True">Available</option>
+                                <option value="False">Borrowed</option>
                             </select>
                         </div>
                         <div class="input-container">
@@ -65,16 +65,25 @@ Book List | block.super
                             <select name="rating" id="rating" class="form-control" class="input">
                                 <option value="0">All</option>
                                 {% for i in 5|my_range %}
-                                    <option value="{{i}}" {% if rating == i %} selected {% endif %}>{{i}}</option>
+                                    <option value="{{i}}">{{i}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="input-container">
+                            <label for="categories">Category</label>
+                            <select name="category" id="categories" class="form-control" class="input">
+                                <option value="all">All</option>
+                                {% for i in categories %}
+                                    <option value="{{i.category__title}}">{{i.category__title}}</option>
                                 {% endfor %}
                             </select>
                         </div>
                         <div class="input-container">
                             <h4>Price</h4>
                             <label for="price_from">From</label>
-                            <input type="number" name="price_from" id="price_from" class="form-control" placeholder="Price" class="input" value="{{price_from}}" min="0">
+                            <input type="number" name="price_from" id="price_from" class="form-control" placeholder="Price" class="input" min="0">
                             <label for="price_to">to</label>
-                            <input type="number" name="price_to" id="price_to" class="form-control" placeholder="Price" class="input" value="{{price_to}}" min="0">
+                            <input type="number" name="price_to" id="price_to" class="form-control" placeholder="Price" class="input" min="0">
                             <button class="btn-6 btn-dark" style="margin-top: 24px">Filter</button>
                         </div>
                 </form>
