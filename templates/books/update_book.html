@@ -8,7 +8,7 @@
     {% csrf_token %}
     <div class="input-container">
         <label for="bookImage">book image:</label>
-        <div style="display: flex;align-items: center">
+        <div style="display: flex;align-items: center;width: 400px">
 
             {{form.image}}
             <img src="{{form.instance.image.url}}" width="80">
