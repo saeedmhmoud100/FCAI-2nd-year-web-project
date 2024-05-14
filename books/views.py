@@ -1,4 +1,6 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.db.models import Q, Avg, Sum
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -8,6 +10,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from books.forms import CreateBookForm, UpdateBookForm
 from books.models import Book
+from project.permissions import check_authenticated, check_user
 
 
 # Create your views here.
@@ -24,7 +27,6 @@ class BookListView(ListView):
         queryset = self.apply_ordering(queryset)
 
         return queryset
-
 
     def apply_ordering(self, queryset):
         ordering = self.request.GET.get('order_by', '?')
@@ -47,6 +49,7 @@ class BookListView(ListView):
         else:
             queryset = queryset.order_by('?')
         return queryset
+
     def apply_search(self, queryset):
         q = self.request.GET.get('q', '')
         search_by = self.request.GET.get('search_by', 'all')
@@ -68,6 +71,7 @@ class BookListView(ListView):
                 Q(title__icontains=q) | Q(author__icontains=q) | Q(category__title__icontains=q) | Q(
                     description__icontains=q) | Q(ratings__review__icontains=q)).distinct()
         return queryset
+
     def apply_filter(self, queryset):
         available = self.request.GET.get('available', '')
         rating = self.request.GET.get('rating', '')
@@ -81,8 +85,6 @@ class BookListView(ListView):
             queryset = queryset.filter(price__range=(price_from, price_to))
         return queryset
 
-
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['q'] = self.request.GET.get('q', '')
@@ -95,10 +97,15 @@ class BookListView(ListView):
         return context
 
 
-
-class BorrowedBookListView(ListView):
+class BorrowedBookListView(UserPassesTestMixin, ListView):
     queryset = Book.objects.active()
     template_name = 'books/borrowed_books_list.html'
+
+    def test_func(self):
+        cond = self.request.user.is_authenticated
+        if not cond:
+            messages.add_message(self.request, messages.ERROR, 'You need to login to view borrowed books')
+        return cond
 
     def get_queryset(self):
         return self.queryset.get_borrowed_by_user(self.request.user)
@@ -108,15 +115,22 @@ class BookDetailView(DetailView):
     model = Book
 
     def get_queryset(self):
-        if (self.request.user.is_authenticated):
+        if self.request.user.is_authenticated:
             Book.objects.active().get(slug=self.kwargs['slug']).increase_views(self.request.user)
         return Book.objects.active().filter(slug=self.kwargs['slug'])
 
 
-class BookCreateView(CreateView):
+class BookCreateView(UserPassesTestMixin, CreateView):
     model = Book
     form_class = CreateBookForm
     template_name = 'books/add_book.html'
+
+    def test_func(self):
+        cond = self.request.user.is_authenticated and self.request.user.is_staff
+        print(cond)
+        if not cond:
+            messages.add_message(self.request, messages.ERROR, 'You need to be admin to add books')
+        return cond
 
     def form_valid(self, form):
         form.instance.uploaded_by = self.request.user
@@ -130,6 +144,7 @@ class BookCreateView(CreateView):
             for error in errors:
                 messages.error(self.request, f"{field}: {error}")
         return super().form_invalid(form)
+
     def get_success_url(self):
         book_url = self.object.get_absolute_url()
         success_message = mark_safe(f'Book added successfully <a href="{book_url}">View Book</a>')
@@ -138,10 +153,17 @@ class BookCreateView(CreateView):
         # return reverse('book_details', args=[self.object.slug])
 
 
-class BookUpdateView(UpdateView):
+class BookUpdateView(UserPassesTestMixin, UpdateView):
     model = Book
     form_class = UpdateBookForm
     template_name = 'books/update_book.html'
+
+    def test_func(self):
+        cond = self.request.user.is_staff or self.request.user == self.get_object().uploaded_by
+        if not cond:
+            messages.add_message(self.request, messages.ERROR,
+                                 'You need to be admin or the owner of the book to can update books')
+        return cond
 
     def get_queryset(self):
         return Book.objects.all().filter(slug=self.kwargs['slug'])
@@ -169,15 +191,25 @@ class BookUpdateView(UpdateView):
 
 def delete_book(request, slug):
     book = Book.objects.all().get(slug=slug)
-    print(book, slug)
-    if request.method == 'POST':
-        book.delete()
-        messages.add_message(request, messages.SUCCESS, 'Book deleted successfully')
+    if request.user.is_superuser or request.user == book.uploaded_by:
+        if request.method == 'POST':
+            book.delete()
+            messages.add_message(request, messages.SUCCESS, 'Book deleted successfully')
+            return redirect('book_list')
+        return render(request, 'books/delete_book.html', {'object': book})
+    else:
+        messages.add_message(request, messages.ERROR, 'You need to be admin or the owner of the book to can delete books')
         return redirect('book_list')
-    return render(request, 'books/delete_book.html', {'object': book})
 
 
-class BorrowBookView(View):
+class BorrowBookView(UserPassesTestMixin, View):
+
+    def test_func(self):
+        cond = self.request.user.is_authenticated
+        if not cond:
+            messages.add_message(self.request, messages.ERROR, 'You need to login to borrow books')
+        return cond
+
     def get(self, request, slug):
         book = Book.objects.active().get(slug=slug)
         if book.is_borrowed:
@@ -193,9 +225,19 @@ class BorrowBookView(View):
         return redirect('borrowed_books')
 
 
-class ReturnBookView(View):
+class ReturnBookView(UserPassesTestMixin,View):
+
+    def test_func(self):
+
+        book = Book.objects.active().get(slug=self.kwargs['slug'])
+        cond = self.request.user.is_authenticated and self.request.user == book.uploaded_by
+        if not cond:
+            messages.add_message(self.request, messages.ERROR, 'You need to login to return books')
+        return cond
+
     def get(self, request, slug):
         book = Book.objects.active().get(slug=slug)
+        self.book = book
         if book.borrower == request.user:
             book.borrower = None
             book.save()
