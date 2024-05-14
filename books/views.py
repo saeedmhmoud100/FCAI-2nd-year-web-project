@@ -79,12 +79,17 @@ class BookListViewAPI(ListView):
         rating = self.request.GET.get('rating', '')
         price_from = self.request.GET.get('price_from', 0)
         price_to = self.request.GET.get('price_to', 100000000000000000000)
-        print(self.request.GET)
+        if price_to == '':
+            price_to = 100000000000000000000
+        else:
+            price_to = int(price_to)
+        price_from = int(price_from)
+
         if available != '' and available:
             queryset = queryset.filter(borrower=None)
         if rating != '' and int(rating) > 0:
             queryset = queryset.annotate(avg_rating=Avg('ratings__rating')).filter(avg_rating__gte=rating)
-        if price_from < price_to:
+        if price_from <= price_to:
             queryset = queryset.filter(price__range=(price_from, price_to))
         return queryset
 
@@ -101,7 +106,6 @@ class BookListViewAPI(ListView):
 
     def get(self,request,*args,**kwargs):
         queryset = self.get_queryset()
-        print(queryset)
         book_list = []
         for book in queryset:
             book_list.append({

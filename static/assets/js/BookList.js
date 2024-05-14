@@ -11,7 +11,10 @@ function handle_submit(e) {
     Array.from(document.getElementsByClassName('click_submit_action')).forEach(element => {
         const formData = new FormData(element)
         for (var pair of formData.entries()) {
-            url += pair[0] + '=' + pair[1] + '&'
+            if(pair[0] == 'price_from' && pair[1] == ''){
+                url += pair[0] + '=' + '0' + '&'
+            }else
+                url += pair[0] + '=' + pair[1] + '&'
         }
 
     })
@@ -23,7 +26,6 @@ function handle_submit(e) {
     const xhr = new XMLHttpRequest()
     xhr.open('GET', url, true)
     xhr.send()
-    console.log(url)
 
     xhr.onreadystatechange = _ => handle_response(xhr)
 
