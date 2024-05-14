@@ -1,7 +1,8 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.db.models import Q, Avg, Sum
+from django.core import serializers
+from django.db.models import Q, Avg, Sum, Value
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils.safestring import mark_safe
@@ -10,12 +11,13 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from books.forms import CreateBookForm, UpdateBookForm
 from books.models import Book
+from django.db.models import CharField
 from project.permissions import check_authenticated, check_user
 
 
 # Create your views here.
 
-class BookListView(ListView):
+class BookListViewAPI(ListView):
     queryset = Book.objects.active()
     context_object_name = 'books'
 
@@ -77,6 +79,7 @@ class BookListView(ListView):
         rating = self.request.GET.get('rating', '')
         price_from = self.request.GET.get('price_from', 0)
         price_to = self.request.GET.get('price_to', 100000000000000000000)
+        print(self.request.GET)
         if available != '' and available:
             queryset = queryset.filter(borrower=None)
         if rating != '' and int(rating) > 0:
@@ -95,6 +98,33 @@ class BookListView(ListView):
         context['price_to'] = self.request.GET.get('price_to', '')
         context['order_by'] = self.request.GET.get('order_by', '')
         return context
+
+    def get(self,request,*args,**kwargs):
+        queryset = self.get_queryset()
+        print(queryset)
+        book_list = []
+        for book in queryset:
+            book_list.append({
+                'slug': book.slug,
+                'id': book.id,
+                'details_url': request.build_absolute_uri(book.get_absolute_url()),
+                'update_url': request.build_absolute_uri(reverse('update_book', args=[book.slug])),
+                'delete_url': request.build_absolute_uri(reverse('delete_book', args=[book.slug])),
+                'title': book.title,
+                'author': book.author,
+                'category': book.category.title,
+                'price': str(book.price),
+                'available':  bool(not book.borrower),
+                'rating': book.rating,
+                'description': book.description,
+                'image_url': request.build_absolute_uri(book.image.url),
+                'is_admin': request.user.is_authenticated and request.user.is_staff,
+            })
+
+
+        return JsonResponse(book_list, safe=False)
+class BookListView(ListView):
+    queryset = Book.objects.active()
 
 
 class BorrowedBookListView(UserPassesTestMixin, ListView):
@@ -198,7 +228,8 @@ def delete_book(request, slug):
             return redirect('book_list')
         return render(request, 'books/delete_book.html', {'object': book})
     else:
-        messages.add_message(request, messages.ERROR, 'You need to be admin or the owner of the book to can delete books')
+        messages.add_message(request, messages.ERROR,
+                             'You need to be admin or the owner of the book to can delete books')
         return redirect('book_list')
 
 
@@ -225,7 +256,7 @@ class BorrowBookView(UserPassesTestMixin, View):
         return redirect('borrowed_books')
 
 
-class ReturnBookView(UserPassesTestMixin,View):
+class ReturnBookView(UserPassesTestMixin, View):
 
     def test_func(self):
 

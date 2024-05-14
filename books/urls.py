@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
 
     path('list/', views.BookListView.as_view(), name='book_list'),
+    path('list_api', views.BookListViewAPI.as_view(), name='book_list_api'),
     path('borrowed/', views.BorrowedBookListView.as_view(), name='borrowed_books'),
     path('add/', views.BookCreateView.as_view(), name='add_book'),
     path('<slug:slug>/', views.BookDetailView.as_view(), name='book_details'),
