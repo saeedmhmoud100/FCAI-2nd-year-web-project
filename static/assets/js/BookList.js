@@ -70,7 +70,13 @@ function handle_response(xhr) {
                     window.location.href = book.details_url
             })
             if(book.is_admin){
-                button[0].parentElement.innerHTML += `<button class="btn-6 btn-success">Update</button><button class="btn-6 btn-danger">Delete</button>`
+                const div2 = document.createElement('div'), div3 = document.createElement('div')
+                div2.innerHTML = `<button class="btn-6 btn-success">Update</button>`
+                div3.innerHTML = `<button class="btn-6 btn-danger">Delete</button>`
+
+                button[0].parentElement.appendChild(div2.children[0])
+                button[0].parentElement.appendChild(div3.children[0])
+                console.log(button)
                 button[1].addEventListener('click', _ => {
                         window.location.href = book.update_url
                 })
