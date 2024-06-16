@@ -35,6 +35,8 @@ function handle_submit(e) {
 function handle_response(xhr) {
     if (xhr.readyState == 4 && xhr.status == 200) {
         const data = JSON.parse(xhr.responseText)
+
+        print(data)
         const cards_container = document.getElementById('book_list_user')
         cards_container.innerHTML = ''
 

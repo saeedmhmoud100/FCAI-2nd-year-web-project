@@ -38,14 +38,12 @@ def login_view(request):
 def signup_view(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
-        print(form.data)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             email = form.cleaned_data.get('email')
             password = form.cleaned_data.get('password')
             re_password = form.cleaned_data.get('re_password')
             is_admin = form.cleaned_data.get('is_admin')
-            print(username, email, password, re_password, is_admin)
             if password != re_password:
                 messages.add_message(request, messages.ERROR, 'Passwords do not match')
             elif User.objects.filter(Q(username=username)):

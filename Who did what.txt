@@ -1,0 +1,16 @@
+mostafa(20221151),saif(20220507),amr(20221111) =>>>>> {
+	html	
+	}
+
+sohbi(20221088),abdwhab(20220523),saeed(20220040) =>>>>> {
+	css	
+	}
+
+mostafa(20221151),saeed(20220040)  =>>>>> {
+	js	
+	}
+
+saeed(20220040)  =>>>>> {
+	django
+	rest of project	
+	}

@@ -83,8 +83,12 @@ class BookListViewAPI(ListView):
             price_to = int(price_to)
         price_from = int(price_from)
 
-        if available != '' and available:
-            queryset = queryset.filter(borrower=None)
+        if available != '':
+            if available == 'True':
+                queryset = queryset.filter(borrower=None)
+            else:
+                queryset = queryset.filter(borrower__isnull=False)
+                print(queryset)
         if rating != '' and int(rating) > 0:
             queryset = queryset.annotate(avg_rating=Avg('ratings__rating')).filter(avg_rating__gte=rating)
         if price_from <= price_to:
@@ -116,6 +120,9 @@ class BookListViewAPI(ListView):
 
 
         return JsonResponse(book_list, safe=False)
+
+
+
 class BookListView(ListView):
     queryset = Book.objects.active()
 
@@ -156,7 +163,6 @@ class BookCreateView(UserPassesTestMixin, CreateView):
 
     def test_func(self):
         cond = self.request.user.is_authenticated and self.request.user.is_staff
-        print(cond)
         if not cond:
             messages.add_message(self.request, messages.ERROR, 'You need to be admin to add books')
         return cond
@@ -260,7 +266,7 @@ class ReturnBookView(UserPassesTestMixin, View):
     def test_func(self):
 
         book = Book.objects.active().get(slug=self.kwargs['slug'])
-        cond = self.request.user.is_authenticated and self.request.user == book.uploaded_by
+        cond = self.request.user.is_authenticated and self.request.user == book.borrower
         if not cond:
             messages.add_message(self.request, messages.ERROR, 'You need to login to return books')
         return cond
