@@ -169,8 +169,7 @@ class BookCreateView(UserPassesTestMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.uploaded_by = self.request.user
-        if(Book.objects.filter(title=form.cleaned_data["title"], author=form.cleaned_data["author"]).count() > 1):
-            print("Book already exists")
+        if(Book.objects.filter(title=form.cleaned_data["title"], author=form.cleaned_data["author"]).exists()):
             messages.add_message(self.request, messages.ERROR, 'Book with this title and author already exists')
             return super().form_invalid(form)
         book = form.save()
