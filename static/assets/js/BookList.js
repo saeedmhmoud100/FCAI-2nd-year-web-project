@@ -36,7 +36,6 @@ function handle_response(xhr) {
     if (xhr.readyState == 4 && xhr.status == 200) {
         const data = JSON.parse(xhr.responseText)
 
-        print(data)
         const cards_container = document.getElementById('book_list_user')
         cards_container.innerHTML = ''
 
@@ -78,7 +77,6 @@ function handle_response(xhr) {
 
                 button[0].parentElement.appendChild(div2.children[0])
                 button[0].parentElement.appendChild(div3.children[0])
-                console.log(button)
                 button[1].addEventListener('click', _ => {
                         window.location.href = book.update_url
                 })
